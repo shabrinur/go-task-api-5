@@ -7,6 +7,12 @@ import (
 	"gorm.io/gorm"
 )
 
+func CheckRecordExists(anyModel interface{}, id uint, db *gorm.DB) bool {
+	var count int64
+	db.Model(anyModel).Where("id = ?", id).Count(&count)
+	return count > 0
+}
+
 func CountRowsAndPages(anyModel interface{}, pageable *response.PaginationData, db *gorm.DB) {
 	var totalRows int64
 	db.Model(anyModel).Count(&totalRows)

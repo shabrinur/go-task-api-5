@@ -15,11 +15,14 @@ func ValidateUpdateId(id uint) error {
 	return nil
 }
 
-func SetErrorResponse(ctx *gin.Context, code int, message string) {
-	ctx.JSON(code, response.ApiResponse{
-		Code:    code,
-		Message: message,
-	})
+func SetErrorResponse(ctx *gin.Context, err error, code int) {
+	if err != nil {
+		ctx.JSON(code, response.ApiResponse{
+			Code:    code,
+			Message: err.Error(),
+		})
+		return
+	}
 }
 
 func SetSuccessResponseNoData(ctx *gin.Context) {

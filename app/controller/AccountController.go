@@ -10,16 +10,16 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type TrainingController struct {
-	svc *service.TrainingService
+type AccountController struct {
+	svc *service.AccountService
 }
 
-func NewTrainingController(svc *service.TrainingService) *TrainingController {
-	return &TrainingController{svc}
+func NewAccountController(svc *service.AccountService) *AccountController {
+	return &AccountController{svc}
 }
 
-func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
-	req := request.TrainingRequest{}
+func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
+	req := request.AccountRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
@@ -27,14 +27,14 @@ func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 	err = req.Validate(false)
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 
-	result, err := ctrl.svc.CreateTraining(req)
+	result, err := ctrl.svc.CreateAccount(req)
 	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
 
 	util.SetSuccessResponse(ctx, result)
 }
 
-func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
-	req := request.TrainingRequest{}
+func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
+	req := request.AccountRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
@@ -42,39 +42,39 @@ func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 	err = req.Validate(true)
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 
-	result, err := ctrl.svc.UpdateTraining(req)
+	result, err := ctrl.svc.UpdateAccount(req)
 	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
 
 	util.SetSuccessResponse(ctx, result)
 }
 
-func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
+func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 
-	result, err := ctrl.svc.GetTrainingById(id)
+	result, err := ctrl.svc.GetAccountById(id)
 	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
 
 	util.SetSuccessResponse(ctx, result)
 }
 
-func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
+func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
 	err := ctx.Bind(&req)
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 
-	validFields := []string{"id", "tema", "pengajar", "created_date", "updated_date"}
+	validFields := []string{"id", "nama", "jenis", "rekening", "id_karyawan", "created_date", "updated_date"}
 	err = req.Validate(validFields)
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 
-	result, err := ctrl.svc.GetTrainingList(req)
+	result, err := ctrl.svc.GetAccountList(req)
 	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
 
 	util.SetSuccessResponse(ctx, result)
 }
 
-func (ctrl *TrainingController) DeleteTraining(ctx *gin.Context) {
+func (ctrl *AccountController) DeleteAccount(ctx *gin.Context) {
 	req := request.IdRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
@@ -83,7 +83,7 @@ func (ctrl *TrainingController) DeleteTraining(ctx *gin.Context) {
 	err = req.Validate()
 	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 
-	err = ctrl.svc.DeleteTraining(req)
+	err = ctrl.svc.DeleteAccount(req)
 	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
 
 	util.SetSuccessResponseNoData(ctx)
