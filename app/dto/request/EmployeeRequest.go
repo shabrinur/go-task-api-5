@@ -12,6 +12,7 @@ type EmployeeRequest struct {
 	Id             uint           `json:"id,omitempty" validate:"numeric"`
 	Nama           string         `json:"nama" validate:"required"`
 	Dob            string         `json:"dob" validate:"required,datetime=2006-01-02"`
+	DobParsed      time.Time      `json:"-"`
 	Status         string         `json:"status" validate:"required"`
 	Alamat         string         `json:"alamat" validate:"required"`
 	DetailKaryawan DetailKaryawan `json:"detailKaryawan"`
@@ -35,14 +36,19 @@ func (c *EmployeeRequest) Validate(isUpdate bool) error {
 			return err
 		}
 		if c.DetailKaryawan.Id != c.Id {
-			return errors.New("ID detail not equals to ID karyawan")
+			return errors.New("ID detail karyawan not equals to ID karyawan")
 		}
 	}
 
 	return nil
 }
 
-func (c *EmployeeRequest) GetDob() (time.Time, error) {
+func (c *EmployeeRequest) ParseDob() error {
 	layout := "2006-01-02"
-	return time.Parse(layout, c.Dob)
+	date, err := time.Parse(layout, c.Dob)
+	if err != nil {
+		return err
+	}
+	c.DobParsed = date
+	return nil
 }
