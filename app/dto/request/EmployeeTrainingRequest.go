@@ -8,10 +8,11 @@ import (
 )
 
 type EmployeeTrainingRequest struct {
-	Id       uint      `json:"id,omitempty" validate:"numeric"`
-	Karyawan IdRequest `json:"karyawan"`
-	Training IdRequest `json:"training"`
-	Tanggal  string    `json:"tanggal" validate:"required,datetime=2006-01-02 15:04:05"`
+	Id            uint      `json:"id,omitempty" validate:"numeric"`
+	Karyawan      IdRequest `json:"karyawan"`
+	Training      IdRequest `json:"training"`
+	Tanggal       string    `json:"tanggal" validate:"required,datetime=2006-01-02 15:04:05"`
+	TanggalParsed time.Time `json:"-"`
 }
 
 func (c *EmployeeTrainingRequest) Validate(isUpdate bool) error {
@@ -30,7 +31,12 @@ func (c *EmployeeTrainingRequest) Validate(isUpdate bool) error {
 	return nil
 }
 
-func (c *EmployeeTrainingRequest) GetTanggal() (time.Time, error) {
+func (c *EmployeeTrainingRequest) ParseTanggal() error {
 	layout := "2006-01-02 15:04:05"
-	return time.Parse(layout, c.Tanggal)
+	date, err := time.Parse(layout, c.Tanggal)
+	if err != nil {
+		return err
+	}
+	c.TanggalParsed = date
+	return nil
 }
