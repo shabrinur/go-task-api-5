@@ -18,73 +18,155 @@ func NewTrainingController(svc *service.TrainingService) *TrainingController {
 	return &TrainingController{svc}
 }
 
+// CreateTraining godoc
+//
+//	@Summary	Create Training
+//	@Id			CreateTraining
+//	@Tags		training
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		request.TrainingRequest	true	"Create Training Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/training/save [post]
 func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 	req := request.TrainingRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	err = req.Validate(false)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	result, err := ctrl.svc.CreateTraining(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.CreateTraining(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// UpdateTraining godoc
+//
+//	@Summary	Update Training
+//	@Id			UpdateTraining
+//	@Tags		training
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		request.TrainingRequest	true	"Update Training Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	404		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/training/update [put]
 func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 	req := request.TrainingRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	err = req.Validate(true)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	result, err := ctrl.svc.UpdateTraining(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.UpdateTraining(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// GetTrainingById godoc
+//
+//	@Summary	Get Training By Id
+//	@Id			GetTrainingById
+//	@Tags		training
+//	@Accept		json
+//	@Produce	json
+//	@Param		id	path		int	true	"Training ID"
+//	@Response	200	{object}	response.ApiResponse
+//	@Response	400	{object}	response.ApiResponse
+//	@Response	404	{object}	response.ApiResponse
+//	@Response	500	{object}	response.ApiResponse
+//	@Router		/training/{id} [get]
 func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	result, err := ctrl.svc.GetTrainingById(id)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.GetTrainingById(id)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// GetTrainingList godoc
+//
+//	@Summary	Get Training List
+//	@Id			GetTrainingList
+//	@Tags		training
+//	@Accept		json
+//	@Produce	json
+//	@Param		page		query	int		false	"Page"
+//	@Param		size		query	int		false	"Size"
+//	@Param		field		query	string	false	"Field"
+//	@Param		direction	query	string	false	"Direction"
+//	@Response	200			{object}	response.PaginationData
+//	@Response	400			{object}	response.ApiResponse
+//	@Response	500			{object}	response.ApiResponse
+//	@Router		/training/list [get]
 func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
 	err := ctx.Bind(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	validFields := []string{"id", "tema", "pengajar", "created_date", "updated_date"}
-	err = req.Validate(validFields)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	result, err := ctrl.svc.GetTrainingList(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.GetTrainingList(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// DeleteTraining godoc
+//
+//	@Summary	Delete Training
+//	@Id			DeleteTraining
+//	@Tags		training
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		request.IdRequest	true	"Delete Training Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/training/delete [delete]
 func (ctrl *TrainingController) DeleteTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	err = req.Validate()
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	err = ctrl.svc.DeleteTraining(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	code, err := ctrl.svc.DeleteTraining(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponseNoData(ctx)
 }
