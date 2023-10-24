@@ -21,30 +21,32 @@ func NewEmployeeTrainingRepository() *EmployeeTrainingRepository {
 	}
 }
 
+func (repo *EmployeeTrainingRepository) CheckDependencyRecordExists(idKaryawan uint, idTraining uint) error {
+	if !util.CheckRecordExists([]*model.EmployeeModel{}, idKaryawan, repo.db) {
+		return errors.New(fmt.Sprint("record not exist for karyawan ID: ", idKaryawan))
+	}
+
+	if !util.CheckRecordExists([]*model.TrainingModel{}, idTraining, repo.db) {
+		return errors.New(fmt.Sprint("record not exist for training ID: ", idTraining))
+	}
+	return nil
+}
+
 func (repo *EmployeeTrainingRepository) Create(dbObj *model.EmployeeTrainingModel) (*model.EmployeeTrainingModel, error) {
-	if !util.CheckRecordExists([]*model.EmployeeModel{}, dbObj.IdKaryawan, repo.db) {
-		return nil, errors.New(fmt.Sprint("record not exist for karyawan ID: ", dbObj.IdKaryawan))
-	}
-	if !util.CheckRecordExists([]*model.TrainingModel{}, dbObj.IdTraining, repo.db) {
-		return nil, errors.New(fmt.Sprint("record not exist for training ID: ", dbObj.IdTraining))
-	}
 	result := repo.db.Create(dbObj)
 	if result.Error != nil {
-		return nil, errors.New("failed to create new karyawan training")
+		return nil, errors.New(fmt.Sprint("error create new karyawan training, reason: ", result.Error.Error()))
 	}
 	return dbObj, nil
 }
 
 func (repo *EmployeeTrainingRepository) Update(id uint, dbObj *model.EmployeeTrainingModel) (*model.EmployeeTrainingModel, error) {
-	if !util.CheckRecordExists([]*model.EmployeeModel{}, dbObj.IdKaryawan, repo.db) {
-		return nil, errors.New(fmt.Sprint("record not exist for karyawan ID: ", dbObj.IdKaryawan))
-	}
-	if !util.CheckRecordExists([]*model.TrainingModel{}, dbObj.IdTraining, repo.db) {
-		return nil, errors.New(fmt.Sprint("record not exist for training ID: ", dbObj.IdTraining))
-	}
 	result := repo.db.Where("id = ?", id).Updates(dbObj)
 	if result.Error != nil {
-		return nil, errors.New(fmt.Sprint("failed to update karyawan training with ID: ", id))
+		return nil, errors.New(fmt.Sprint("error update karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
+	}
+	if result.RowsAffected <= 0 {
+		return nil, nil
 	}
 	return dbObj, nil
 }
@@ -53,7 +55,10 @@ func (repo *EmployeeTrainingRepository) GetById(id uint) (*model.EmployeeTrainin
 	dbObj := &model.EmployeeTrainingModel{}
 	result := repo.db.Where("id = ?", id).Preload("Karyawan").Preload("Training").Find(&dbObj)
 	if result.Error != nil {
-		return nil, errors.New(fmt.Sprint("failed to find karyawan training with ID: ", id))
+		return nil, errors.New(fmt.Sprint("error find karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
+	}
+	if result.RowsAffected <= 0 {
+		return nil, nil
 	}
 	return dbObj, nil
 }
@@ -64,7 +69,7 @@ func (repo *EmployeeTrainingRepository) GetList(pagedData *response.PaginationDa
 	if pagedData.TotalElements > 0 {
 		result := repo.db.Scopes(util.Paginate(pagedData, repo.db)).Preload("Karyawan").Preload("Training").Find(&dbObjs)
 		if result.Error != nil {
-			return nil, errors.New("failed to get karyawan training list")
+			return nil, errors.New(fmt.Sprint("error get karyawan training list, reason: ", result.Error.Error()))
 		}
 		pagedData.Content = &dbObjs
 		pagedData.NumberOfElements = int(result.RowsAffected)
@@ -78,7 +83,7 @@ func (repo *EmployeeTrainingRepository) GetList(pagedData *response.PaginationDa
 func (repo *EmployeeTrainingRepository) Delete(id uint) error {
 	result := repo.db.Where("id = ?", id).Delete(&model.EmployeeTrainingModel{})
 	if result.Error != nil {
-		return errors.New(fmt.Sprint("failed to delete karyawan training with ID: ", id))
+		return errors.New(fmt.Sprint("error delete karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
 	}
 	return nil
 }

@@ -18,79 +18,155 @@ func NewEmployeeTrainingController(svc *service.EmployeeTrainingService) *Employ
 	return &EmployeeTrainingController{svc}
 }
 
+// CreateEmployeeTraining godoc
+//
+//	@Summary	Create Karyawan Training
+//	@Id			CreateEmployeeTraining
+//	@Tags		karyawan-training
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		request.EmployeeTrainingRequest	true	"Create Karyawan Training Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/karyawan-training/save [post]
 func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context) {
 	req := request.EmployeeTrainingRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	err = req.Validate(false)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	err = req.ParseTanggal()
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	result, err := ctrl.svc.CreateEmployeeTraining(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.CreateEmployeeTraining(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// UpdateEmployeeTraining godoc
+//
+//	@Summary	Update Karyawan Training
+//	@Id			UpdateEmployeeTraining
+//	@Tags		karyawan-training
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		request.EmployeeTrainingRequest	true	"Update Karyawan Training Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	404		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/karyawan-training/update [put]
 func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context) {
 	req := request.EmployeeTrainingRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	err = req.Validate(true)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	err = req.ParseTanggal()
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	result, err := ctrl.svc.UpdateEmployeeTraining(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.UpdateEmployeeTraining(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// GetEmployeeTrainingById godoc
+//
+//	@Summary	Get Karyawan Training By Id
+//	@Id			GetEmployeeTrainingById
+//	@Tags		karyawan-training
+//	@Accept		json
+//	@Produce	json
+//	@Param		id	path		int	true	"Training ID"
+//	@Response	200	{object}	response.ApiResponse
+//	@Response	400	{object}	response.ApiResponse
+//	@Response	404	{object}	response.ApiResponse
+//	@Response	500	{object}	response.ApiResponse
+//	@Router		/karyawan-training/{id} [get]
 func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	result, err := ctrl.svc.GetEmployeeTrainingById(id)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.GetEmployeeTrainingById(id)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// GetEmployeeTrainingList godoc
+//
+//	@Summary	Get Karyawan Training List
+//	@Id			GetEmployeeTrainingList
+//	@Tags		karyawan-training
+//	@Accept		json
+//	@Produce	json
+//	@Param		page		query	int		false	"Page"
+//	@Param		size		query	int		false	"Size"
+//	@Param		field		query	string	false	"Field"
+//	@Param		direction	query	string	false	"Direction"
+//	@Response	200			{object}	response.PaginationData
+//	@Response	400			{object}	response.ApiResponse
+//	@Response	500			{object}	response.ApiResponse
+//	@Router		/karyawan-training/list [get]
 func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
 	err := ctx.Bind(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	validFields := []string{"id", "tanggal", "id_karyawan", "id_training", "created_date", "updated_date"}
-	err = req.Validate(validFields)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	result, err := ctrl.svc.GetEmployeeTrainingList(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	result, code, err := ctrl.svc.GetEmployeeTrainingList(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponse(ctx, result)
 }
 
+// DeleteEmployeeTraining godoc
+//
+//	@Summary	Delete Karyawan Training
+//	@Id			DeleteEmployeeTraining
+//	@Tags		karyawan-training
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		request.IdRequest	true	"Delete Karyawan Training Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/karyawan-training/delete [delete]
 func (ctrl *EmployeeTrainingController) DeleteEmployeeTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		return
+	}
 
-	err = req.Validate()
-	util.SetErrorResponse(ctx, err, http.StatusBadRequest)
-
-	err = ctrl.svc.DeleteEmployeeTraining(req)
-	util.SetErrorResponse(ctx, err, http.StatusInternalServerError)
+	code, err := ctrl.svc.DeleteEmployeeTraining(req)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
 
 	util.SetSuccessResponseNoData(ctx)
 }
