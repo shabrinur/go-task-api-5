@@ -1,0 +1,798 @@
+definitions:
+  dto.Pageable:
+    properties:
+      offset:
+        type: integer
+      page:
+        type: integer
+      size:
+        type: integer
+    type: object
+  dto.Sortable:
+    properties:
+      direction:
+        type: string
+      field:
+        type: string
+    type: object
+  request.AccountRequest:
+    properties:
+      id:
+        type: integer
+      jenis:
+        type: string
+      karyawan:
+        $ref: '#/definitions/request.IdRequest'
+      nama:
+        type: string
+      rekening:
+        type: string
+    required:
+    - jenis
+    - nama
+    - rekening
+    type: object
+  request.DetailKaryawan:
+    properties:
+      id:
+        type: integer
+      nik:
+        type: string
+      npwp:
+        type: string
+    required:
+    - nik
+    - npwp
+    type: object
+  request.EmployeeRequest:
+    properties:
+      alamat:
+        type: string
+      detailKaryawan:
+        $ref: '#/definitions/request.DetailKaryawan'
+      dob:
+        type: string
+      id:
+        type: integer
+      nama:
+        type: string
+      status:
+        type: string
+    required:
+    - alamat
+    - dob
+    - nama
+    - status
+    type: object
+  request.EmployeeTrainingRequest:
+    properties:
+      id:
+        type: integer
+      karyawan:
+        $ref: '#/definitions/request.IdRequest'
+      tanggal:
+        type: string
+      training:
+        $ref: '#/definitions/request.IdRequest'
+    required:
+    - tanggal
+    type: object
+  request.IdRequest:
+    properties:
+      id:
+        type: integer
+    required:
+    - id
+    type: object
+  request.TrainingRequest:
+    properties:
+      id:
+        type: integer
+      pengajar:
+        type: string
+      tema:
+        type: string
+    required:
+    - pengajar
+    - tema
+    type: object
+  response.ApiResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      message:
+        type: string
+    type: object
+  response.PaginationData:
+    properties:
+      content: {}
+      emptyPage:
+        type: boolean
+      firstPage:
+        type: boolean
+      lastPage:
+        type: boolean
+      numberOfElements:
+        type: integer
+      pageable:
+        $ref: '#/definitions/dto.Pageable'
+      sortable:
+        $ref: '#/definitions/dto.Sortable'
+      totalElements:
+        type: integer
+      totalPages:
+        type: integer
+    type: object
+info:
+  contact: {}
+paths:
+  /karyawan-training/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: GetEmployeeTrainingById
+      parameters:
+      - description: Training ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Karyawan Training By Id
+      tags:
+      - karyawan-training
+  /karyawan-training/delete:
+    delete:
+      consumes:
+      - application/json
+      operationId: DeleteEmployeeTraining
+      parameters:
+      - description: Delete Karyawan Training Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Delete Karyawan Training
+      tags:
+      - karyawan-training
+  /karyawan-training/list:
+    get:
+      consumes:
+      - application/json
+      operationId: GetEmployeeTrainingList
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: size
+        type: integer
+      - description: Field
+        in: query
+        name: field
+        type: string
+      - description: Direction
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaginationData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Karyawan Training List
+      tags:
+      - karyawan-training
+  /karyawan-training/save:
+    post:
+      consumes:
+      - application/json
+      operationId: CreateEmployeeTraining
+      parameters:
+      - description: Create Karyawan Training Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.EmployeeTrainingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Create Karyawan Training
+      tags:
+      - karyawan-training
+  /karyawan-training/update:
+    put:
+      consumes:
+      - application/json
+      operationId: UpdateEmployeeTraining
+      parameters:
+      - description: Update Karyawan Training Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.EmployeeTrainingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Update Karyawan Training
+      tags:
+      - karyawan-training
+  /karyawan/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: GetEmployeeById
+      parameters:
+      - description: Karyawan ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Karyawan By Id
+      tags:
+      - karyawan
+  /karyawan/delete:
+    delete:
+      consumes:
+      - application/json
+      operationId: DeleteEmployee
+      parameters:
+      - description: Delete Karyawan Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Delete Karyawan
+      tags:
+      - karyawan
+  /karyawan/list:
+    get:
+      consumes:
+      - application/json
+      operationId: GetEmployeeList
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: size
+        type: integer
+      - description: Field
+        in: query
+        name: field
+        type: string
+      - description: Direction
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaginationData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Karyawan List
+      tags:
+      - karyawan
+  /karyawan/save:
+    post:
+      consumes:
+      - application/json
+      operationId: CreateEmployee
+      parameters:
+      - description: Create Karyawan Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.EmployeeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Create Karyawan
+      tags:
+      - karyawan
+  /karyawan/update:
+    put:
+      consumes:
+      - application/json
+      operationId: UpdateEmployee
+      parameters:
+      - description: Update Karyawan Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.EmployeeRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Update Karyawan
+      tags:
+      - karyawan
+  /rekening/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: GetAccountById
+      parameters:
+      - description: Rekening ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Rekening By Id
+      tags:
+      - rekening
+  /rekening/delete:
+    delete:
+      consumes:
+      - application/json
+      operationId: DeleteAccount
+      parameters:
+      - description: Delete Rekening Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Delete Rekening
+      tags:
+      - rekening
+  /rekening/list:
+    get:
+      consumes:
+      - application/json
+      operationId: GetAccountList
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: size
+        type: integer
+      - description: Field
+        in: query
+        name: field
+        type: string
+      - description: Direction
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaginationData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Rekening List
+      tags:
+      - rekening
+  /rekening/save:
+    post:
+      consumes:
+      - application/json
+      operationId: CreateAccount
+      parameters:
+      - description: Create Rekening Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.AccountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Create Rekening
+      tags:
+      - rekening
+  /rekening/update:
+    put:
+      consumes:
+      - application/json
+      operationId: UpdateAccount
+      parameters:
+      - description: Update Rekening Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.AccountRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Update Rekening
+      tags:
+      - rekening
+  /training/{id}:
+    get:
+      consumes:
+      - application/json
+      operationId: GetTrainingById
+      parameters:
+      - description: Training ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Training By Id
+      tags:
+      - training
+  /training/delete:
+    delete:
+      consumes:
+      - application/json
+      operationId: DeleteTraining
+      parameters:
+      - description: Delete Training Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Delete Training
+      tags:
+      - training
+  /training/list:
+    get:
+      consumes:
+      - application/json
+      operationId: GetTrainingList
+      parameters:
+      - description: Page
+        in: query
+        name: page
+        type: integer
+      - description: Size
+        in: query
+        name: size
+        type: integer
+      - description: Field
+        in: query
+        name: field
+        type: string
+      - description: Direction
+        in: query
+        name: direction
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PaginationData'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Training List
+      tags:
+      - training
+  /training/save:
+    post:
+      consumes:
+      - application/json
+      operationId: CreateTraining
+      parameters:
+      - description: Create Training Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.TrainingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Create Training
+      tags:
+      - training
+  /training/update:
+    put:
+      consumes:
+      - application/json
+      operationId: UpdateTraining
+      parameters:
+      - description: Update Training Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.TrainingRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Update Training
+      tags:
+      - training
+swagger: "2.0"

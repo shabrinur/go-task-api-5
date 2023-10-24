@@ -13,8 +13,14 @@ import (
 var DB *gorm.DB
 
 func InitDB() {
+	host := getConfigValue("jdbc.training.host")
+	port := getConfigValue("jdbc.training.port")
+	dbname := getConfigValue("jdbc.training.dbName")
+	user := getConfigValue("jdbc.training.user")
+	password := getConfigValue("jdbc.training.password")
+
 	// create postgres connection
-	conn := "host=localhost user=training password=training dbname=training port=5432 sslmode=disable TimeZone=Asia/Jakarta"
+	conn := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable TimeZone=Asia/Jakarta"
 	db, err := gorm.Open(postgres.Open(conn), &gorm.Config{
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true,
