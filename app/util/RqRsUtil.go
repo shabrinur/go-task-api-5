@@ -16,13 +16,10 @@ func ValidateUpdateId(id uint) error {
 }
 
 func SetErrorResponse(ctx *gin.Context, err error, code int) {
-	if err != nil {
-		ctx.JSON(code, response.ApiResponse{
-			Code:    code,
-			Message: err.Error(),
-		})
-		return
-	}
+	ctx.AbortWithStatusJSON(code, response.ApiResponse{
+		Code:    code,
+		Message: err.Error(),
+	})
 }
 
 func SetSuccessResponseNoData(ctx *gin.Context) {
