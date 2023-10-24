@@ -115,10 +115,10 @@ func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 //	@Tags		training
 //	@Accept		json
 //	@Produce	json
-//	@Param		page		query	int		false	"Page"
-//	@Param		size		query	int		false	"Size"
-//	@Param		field		query	string	false	"Field"
-//	@Param		direction	query	string	false	"Direction"
+//	@Param		page		query		int		false	"Page"
+//	@Param		size		query		int		false	"Size"
+//	@Param		field		query		string	false	"Field"
+//	@Param		direction	query		string	false	"Direction"
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
