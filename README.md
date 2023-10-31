@@ -16,4 +16,4 @@ This application uses **PostgreSQL**. Database connection can be configured in f
 
 ## Documentation
 
-Swagger UI for this application can be accessed from http://localhost:8080/swagger/index.html. Documentation for API requests & responses can be found under **/doc**.
+Swagger UI for this application can be accessed from http://localhost:8080/swagger/index.html. Documentation for API requests & responses can be found under **/docs**.
