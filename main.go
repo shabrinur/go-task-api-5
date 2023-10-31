@@ -2,6 +2,7 @@ package main
 
 import (
 	"idstar-idp/rest-api/app/config"
+	"idstar-idp/rest-api/app/middleware"
 	"idstar-idp/rest-api/app/router"
 	"sync"
 
@@ -14,9 +15,15 @@ import (
 var once sync.Once
 
 func main() {
+	gin.SetMode(gin.ReleaseMode)
+
 	initApp()
 
 	r := gin.Default()
+
+	// add middleware
+	logger := middleware.LoggerMiddleware{}
+	r.Use(logger.Logger())
 
 	// group routing /v1/idstar
 	idstar := r.Group("/v1/idstar")
