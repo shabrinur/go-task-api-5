@@ -9,6 +9,7 @@ import (
 	"idstar-idp/rest-api/app/util"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type AccountRepository struct {
@@ -29,7 +30,7 @@ func (repo *AccountRepository) CheckDependencyRecordExists(idKaryawan uint) erro
 }
 
 func (repo *AccountRepository) Create(dbObj *model.AccountModel) (*model.AccountModel, error) {
-	result := repo.db.Create(dbObj)
+	result := repo.db.Preload(clause.Associations).Create(dbObj).First(dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error create new rekening, reason: ", result.Error.Error()))
 	}
@@ -37,7 +38,7 @@ func (repo *AccountRepository) Create(dbObj *model.AccountModel) (*model.Account
 }
 
 func (repo *AccountRepository) Update(id uint, dbObj *model.AccountModel) (*model.AccountModel, error) {
-	result := repo.db.Where("id = ?", id).Updates(dbObj)
+	result := repo.db.Where("id = ?", id).Preload(clause.Associations).Updates(dbObj).First(dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error update rekening with ID: ", id, ", reason: ", result.Error.Error()))
 	}
@@ -49,7 +50,7 @@ func (repo *AccountRepository) Update(id uint, dbObj *model.AccountModel) (*mode
 
 func (repo *AccountRepository) GetById(id uint) (*model.AccountModel, error) {
 	dbObj := &model.AccountModel{}
-	result := repo.db.Where("id = ?", id).Preload("Karyawan").Find(&dbObj)
+	result := repo.db.Where("id = ?", id).Preload(clause.Associations).Find(&dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error find rekening with ID: ", id, ", reason: ", result.Error.Error()))
 	}
@@ -64,7 +65,7 @@ func (repo *AccountRepository) GetList(pagedData *response.PaginationData) (*res
 	util.CountRowsAndPages(dbObjs, pagedData, repo.db)
 
 	if pagedData.TotalElements > 0 {
-		result := repo.db.Scopes(util.Paginate(pagedData, repo.db)).Preload("Karyawan").Find(&dbObjs)
+		result := repo.db.Scopes(util.Paginate(pagedData, repo.db)).Preload(clause.Associations).Find(&dbObjs)
 		if result.Error != nil {
 			return nil, errors.New(fmt.Sprint("error get rekening list, reason: ", result.Error.Error()))
 		}
@@ -77,10 +78,10 @@ func (repo *AccountRepository) GetList(pagedData *response.PaginationData) (*res
 	return pagedData, nil
 }
 
-func (repo *AccountRepository) Delete(id uint) error {
+func (repo *AccountRepository) Delete(id uint) (int64, error) {
 	result := repo.db.Where("id = ?", id).Delete(&model.AccountModel{})
 	if result.Error != nil {
-		return errors.New(fmt.Sprint("error delete rekening with ID: ", id, ", reason: ", result.Error.Error()))
+		return 0, errors.New(fmt.Sprint("error delete rekening with ID: ", id, ", reason: ", result.Error.Error()))
 	}
-	return nil
+	return result.RowsAffected, nil
 }

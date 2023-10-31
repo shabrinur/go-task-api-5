@@ -108,9 +108,12 @@ func (svc *AccountService) DeleteAccount(req request.IdRequest) (int, error) {
 		return http.StatusBadRequest, err
 	}
 
-	err = svc.repo.Delete(req.Id)
+	deleted, err := svc.repo.Delete(req.Id)
 	if err != nil {
 		return http.StatusInternalServerError, err
+	}
+	if deleted <= 0 {
+		return http.StatusNotFound, errors.New(fmt.Sprint("record not exist for rekening ID: ", req.Id))
 	}
 
 	return 0, nil

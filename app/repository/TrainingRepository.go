@@ -30,7 +30,7 @@ func (repo *TrainingRepository) Create(dbObj *model.TrainingModel) (*model.Train
 }
 
 func (repo *TrainingRepository) Update(id uint, dbObj *model.TrainingModel) (*model.TrainingModel, error) {
-	result := repo.db.Where("id = ?", id).Updates(dbObj)
+	result := repo.db.Where("id = ?", id).Updates(dbObj).First(dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error update training with ID: ", id, ", reason: ", result.Error.Error()))
 	}
@@ -70,15 +70,15 @@ func (repo *TrainingRepository) GetList(pagedData *response.PaginationData) (*re
 	return pagedData, nil
 }
 
-func (repo *TrainingRepository) Delete(id uint) error {
+func (repo *TrainingRepository) Delete(id uint) (int64, error) {
 	result := repo.db.Where("id_training = ?", id).Delete(&model.EmployeeTrainingModel{})
 	if result.Error != nil {
-		return errors.New(fmt.Sprint("error delete karyawan training with training ID: ", id, ", reason: ", result.Error.Error()))
+		return 0, errors.New(fmt.Sprint("error delete karyawan training with training ID: ", id, ", reason: ", result.Error.Error()))
 	}
 
 	result = repo.db.Where("id = ?", id).Delete(&model.TrainingModel{})
 	if result.Error != nil {
-		return errors.New(fmt.Sprint("error delete training with ID: ", id, ", reason: ", result.Error.Error()))
+		return 0, errors.New(fmt.Sprint("error delete training with ID: ", id, ", reason: ", result.Error.Error()))
 	}
-	return nil
+	return result.RowsAffected, nil
 }

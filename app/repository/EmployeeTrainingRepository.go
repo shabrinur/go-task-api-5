@@ -9,6 +9,7 @@ import (
 	"idstar-idp/rest-api/app/util"
 
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type EmployeeTrainingRepository struct {
@@ -33,7 +34,7 @@ func (repo *EmployeeTrainingRepository) CheckDependencyRecordExists(idKaryawan u
 }
 
 func (repo *EmployeeTrainingRepository) Create(dbObj *model.EmployeeTrainingModel) (*model.EmployeeTrainingModel, error) {
-	result := repo.db.Create(dbObj)
+	result := repo.db.Preload("Karyawan.DetailKaryawan").Preload(clause.Associations).Create(dbObj).First(dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error create new karyawan training, reason: ", result.Error.Error()))
 	}
@@ -41,7 +42,7 @@ func (repo *EmployeeTrainingRepository) Create(dbObj *model.EmployeeTrainingMode
 }
 
 func (repo *EmployeeTrainingRepository) Update(id uint, dbObj *model.EmployeeTrainingModel) (*model.EmployeeTrainingModel, error) {
-	result := repo.db.Where("id = ?", id).Updates(dbObj)
+	result := repo.db.Where("id = ?", id).Preload("Karyawan.DetailKaryawan").Preload(clause.Associations).Updates(dbObj).First(dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error update karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
 	}
@@ -53,7 +54,7 @@ func (repo *EmployeeTrainingRepository) Update(id uint, dbObj *model.EmployeeTra
 
 func (repo *EmployeeTrainingRepository) GetById(id uint) (*model.EmployeeTrainingModel, error) {
 	dbObj := &model.EmployeeTrainingModel{}
-	result := repo.db.Where("id = ?", id).Preload("Karyawan").Preload("Training").Find(&dbObj)
+	result := repo.db.Where("id = ?", id).Preload("Karyawan.DetailKaryawan").Preload(clause.Associations).Find(&dbObj)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error find karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
 	}
@@ -67,7 +68,7 @@ func (repo *EmployeeTrainingRepository) GetList(pagedData *response.PaginationDa
 	util.CountRowsAndPages(dbObjs, pagedData, repo.db)
 
 	if pagedData.TotalElements > 0 {
-		result := repo.db.Scopes(util.Paginate(pagedData, repo.db)).Preload("Karyawan").Preload("Training").Find(&dbObjs)
+		result := repo.db.Scopes(util.Paginate(pagedData, repo.db)).Preload("Karyawan.DetailKaryawan").Preload(clause.Associations).Find(&dbObjs)
 		if result.Error != nil {
 			return nil, errors.New(fmt.Sprint("error get karyawan training list, reason: ", result.Error.Error()))
 		}
@@ -80,10 +81,10 @@ func (repo *EmployeeTrainingRepository) GetList(pagedData *response.PaginationDa
 	return pagedData, nil
 }
 
-func (repo *EmployeeTrainingRepository) Delete(id uint) error {
+func (repo *EmployeeTrainingRepository) Delete(id uint) (int64, error) {
 	result := repo.db.Where("id = ?", id).Delete(&model.EmployeeTrainingModel{})
 	if result.Error != nil {
-		return errors.New(fmt.Sprint("error delete karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
+		return 0, errors.New(fmt.Sprint("error delete karyawan training with ID: ", id, ", reason: ", result.Error.Error()))
 	}
-	return nil
+	return result.RowsAffected, nil
 }
