@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"idstar-idp/rest-api/app/dto/request"
 	"idstar-idp/rest-api/app/dto/response"
-	"idstar-idp/rest-api/app/model"
-	"idstar-idp/rest-api/app/repository"
+	model "idstar-idp/rest-api/app/model/emptraining"
+	repository "idstar-idp/rest-api/app/repository/emptraining"
 	"net/http"
 )
 

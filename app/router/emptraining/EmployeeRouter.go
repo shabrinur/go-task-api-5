@@ -1,9 +1,9 @@
 package router
 
 import (
-	"idstar-idp/rest-api/app/controller"
-	"idstar-idp/rest-api/app/repository"
-	"idstar-idp/rest-api/app/service"
+	controller "idstar-idp/rest-api/app/controller/emptraining"
+	repository "idstar-idp/rest-api/app/repository/emptraining"
+	service "idstar-idp/rest-api/app/service/emptraining"
 
 	"github.com/gin-gonic/gin"
 )

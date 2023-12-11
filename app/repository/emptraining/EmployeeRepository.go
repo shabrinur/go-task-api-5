@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/dto/response"
-	"idstar-idp/rest-api/app/model"
+	model "idstar-idp/rest-api/app/model/emptraining"
 	"idstar-idp/rest-api/app/util"
 
 	"gorm.io/gorm"
@@ -18,7 +18,7 @@ type EmployeeRepository struct {
 
 func NewEmployeeRepository() *EmployeeRepository {
 	return &EmployeeRepository{
-		db: config.GetDB(),
+		db: config.GetTrainingDB(),
 	}
 }
 

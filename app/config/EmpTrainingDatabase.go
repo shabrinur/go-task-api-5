@@ -1,7 +1,7 @@
 package config
 
 import (
-	"idstar-idp/rest-api/app/model"
+	model "idstar-idp/rest-api/app/model/emptraining"
 	"log"
 
 	"gorm.io/driver/postgres"
@@ -10,9 +10,9 @@ import (
 	"gorm.io/gorm/schema"
 )
 
-var DB *gorm.DB
+var TrainingDB *gorm.DB
 
-func InitDB() {
+func InitTrainingDB() {
 	host := getConfigValue("postgres.training.host")
 	port := getConfigValue("postgres.training.port")
 	dbname := getConfigValue("postgres.training.dbName")
@@ -39,9 +39,9 @@ func InitDB() {
 	db.AutoMigrate(&model.AccountModel{})
 	db.AutoMigrate(&model.EmployeeTrainingModel{})
 
-	DB = db
+	TrainingDB = db
 }
 
-func GetDB() *gorm.DB {
-	return DB
+func GetTrainingDB() *gorm.DB {
+	return TrainingDB
 }

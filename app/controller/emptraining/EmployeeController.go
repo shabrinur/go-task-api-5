@@ -2,7 +2,7 @@ package controller
 
 import (
 	"idstar-idp/rest-api/app/dto/request"
-	"idstar-idp/rest-api/app/service"
+	service "idstar-idp/rest-api/app/service/emptraining"
 	"idstar-idp/rest-api/app/util"
 	"net/http"
 	"strconv"
@@ -10,28 +10,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type AccountController struct {
-	svc *service.AccountService
+type EmployeeController struct {
+	svc *service.EmployeeService
 }
 
-func NewAccountController(svc *service.AccountService) *AccountController {
-	return &AccountController{svc}
+func NewEmployeeController(svc *service.EmployeeService) *EmployeeController {
+	return &EmployeeController{svc}
 }
 
-// CreateAccount godoc
+// CreateEmployee godoc
 //
-//	@Summary	Create Rekening
-//	@Id			CreateAccount
-//	@Tags		rekening
+//	@Summary	Create Karyawan
+//	@Id			CreateEmployee
+//	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		request.AccountRequest	true	"Create Rekening Request"
+//	@Param		request	body		request.EmployeeRequest	true	"Create Karyawan Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/rekening/save [post]
-func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
-	req := request.AccountRequest{}
+//	@Router		/karyawan/save [post]
+func (ctrl *EmployeeController) CreateEmployee(ctx *gin.Context) {
+	req := request.EmployeeRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
@@ -39,7 +39,7 @@ func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 		return
 	}
 
-	result, code, err := ctrl.svc.CreateAccount(req)
+	result, code, err := ctrl.svc.CreateEmployee(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -48,21 +48,21 @@ func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 	util.SetSuccessResponse(ctx, result)
 }
 
-// UpdateAccount godoc
+// UpdateEmployee godoc
 //
-//	@Summary	Update Rekening
-//	@Id			UpdateAccount
-//	@Tags		rekening
+//	@Summary	Update Karyawan
+//	@Id			UpdateEmployee
+//	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		request.AccountRequest	true	"Update Rekening Request"
+//	@Param		request	body		request.EmployeeRequest	true	"Update Karyawan Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	404		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/rekening/update [put]
-func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
-	req := request.AccountRequest{}
+//	@Router		/karyawan/update [put]
+func (ctrl *EmployeeController) UpdateEmployee(ctx *gin.Context) {
+	req := request.EmployeeRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
@@ -70,7 +70,7 @@ func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 		return
 	}
 
-	result, code, err := ctrl.svc.UpdateAccount(req)
+	result, code, err := ctrl.svc.UpdateEmployee(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -79,27 +79,27 @@ func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 	util.SetSuccessResponse(ctx, result)
 }
 
-// GetAccountById godoc
+// GetEmployeeById godoc
 //
-//	@Summary	Get Rekening By Id
-//	@Id			GetAccountById
-//	@Tags		rekening
+//	@Summary	Get Karyawan By Id
+//	@Id			GetEmployeeById
+//	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
-//	@Param		id	path		int	true	"Rekening ID"
+//	@Param		id	path		int	true	"Karyawan ID"
 //	@Response	200	{object}	response.ApiResponse
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	404	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/rekening/{id} [get]
-func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
+//	@Router		/karyawan/{id} [get]
+func (ctrl *EmployeeController) GetEmployeeById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 		return
 	}
 
-	result, code, err := ctrl.svc.GetAccountById(id)
+	result, code, err := ctrl.svc.GetEmployeeById(id)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -108,11 +108,11 @@ func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 	util.SetSuccessResponse(ctx, result)
 }
 
-// GetAccountList godoc
+// GetEmployeeList godoc
 //
-//	@Summary	Get Rekening List
-//	@Id			GetAccountList
-//	@Tags		rekening
+//	@Summary	Get Karyawan List
+//	@Id			GetEmployeeList
+//	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
 //	@Param		page		query		int		false	"Page"
@@ -122,8 +122,8 @@ func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/rekening/list [get]
-func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
+//	@Router		/karyawan/list [get]
+func (ctrl *EmployeeController) GetEmployeeList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
 	err := ctx.Bind(&req)
@@ -132,7 +132,7 @@ func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 		return
 	}
 
-	result, code, err := ctrl.svc.GetAccountList(req)
+	result, code, err := ctrl.svc.GetEmployeeList(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -141,19 +141,19 @@ func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 	util.SetSuccessResponse(ctx, result)
 }
 
-// DeleteAccount godoc
+// DeleteEmployee godoc
 //
-//	@Summary	Delete Rekening
-//	@Id			DeleteAccount
-//	@Tags		rekening
+//	@Summary	Delete Karyawan
+//	@Id			DeleteEmployee
+//	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		request.IdRequest	true	"Delete Rekening Request"
+//	@Param		request	body		request.IdRequest	true	"Delete Karyawan Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/rekening/delete [delete]
-func (ctrl *AccountController) DeleteAccount(ctx *gin.Context) {
+//	@Router		/karyawan/delete [delete]
+func (ctrl *EmployeeController) DeleteEmployee(ctx *gin.Context) {
 	req := request.IdRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
@@ -162,7 +162,7 @@ func (ctrl *AccountController) DeleteAccount(ctx *gin.Context) {
 		return
 	}
 
-	code, err := ctrl.svc.DeleteAccount(req)
+	code, err := ctrl.svc.DeleteEmployee(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return

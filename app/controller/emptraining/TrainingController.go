@@ -2,7 +2,7 @@ package controller
 
 import (
 	"idstar-idp/rest-api/app/dto/request"
-	"idstar-idp/rest-api/app/service"
+	service "idstar-idp/rest-api/app/service/emptraining"
 	"idstar-idp/rest-api/app/util"
 	"net/http"
 	"strconv"
@@ -10,28 +10,28 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type EmployeeTrainingController struct {
-	svc *service.EmployeeTrainingService
+type TrainingController struct {
+	svc *service.TrainingService
 }
 
-func NewEmployeeTrainingController(svc *service.EmployeeTrainingService) *EmployeeTrainingController {
-	return &EmployeeTrainingController{svc}
+func NewTrainingController(svc *service.TrainingService) *TrainingController {
+	return &TrainingController{svc}
 }
 
-// CreateEmployeeTraining godoc
+// CreateTraining godoc
 //
-//	@Summary	Create Karyawan Training
-//	@Id			CreateEmployeeTraining
-//	@Tags		karyawan-training
+//	@Summary	Create Training
+//	@Id			CreateTraining
+//	@Tags		training
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		request.EmployeeTrainingRequest	true	"Create Karyawan Training Request"
+//	@Param		request	body		request.TrainingRequest	true	"Create Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan-training/save [post]
-func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context) {
-	req := request.EmployeeTrainingRequest{}
+//	@Router		/training/save [post]
+func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
+	req := request.TrainingRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
@@ -39,7 +39,7 @@ func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context)
 		return
 	}
 
-	result, code, err := ctrl.svc.CreateEmployeeTraining(req)
+	result, code, err := ctrl.svc.CreateTraining(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -48,21 +48,21 @@ func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context)
 	util.SetSuccessResponse(ctx, result)
 }
 
-// UpdateEmployeeTraining godoc
+// UpdateTraining godoc
 //
-//	@Summary	Update Karyawan Training
-//	@Id			UpdateEmployeeTraining
-//	@Tags		karyawan-training
+//	@Summary	Update Training
+//	@Id			UpdateTraining
+//	@Tags		training
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		request.EmployeeTrainingRequest	true	"Update Karyawan Training Request"
+//	@Param		request	body		request.TrainingRequest	true	"Update Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	404		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan-training/update [put]
-func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context) {
-	req := request.EmployeeTrainingRequest{}
+//	@Router		/training/update [put]
+func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
+	req := request.TrainingRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {
@@ -70,7 +70,7 @@ func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context)
 		return
 	}
 
-	result, code, err := ctrl.svc.UpdateEmployeeTraining(req)
+	result, code, err := ctrl.svc.UpdateTraining(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -79,11 +79,11 @@ func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context)
 	util.SetSuccessResponse(ctx, result)
 }
 
-// GetEmployeeTrainingById godoc
+// GetTrainingById godoc
 //
-//	@Summary	Get Karyawan Training By Id
-//	@Id			GetEmployeeTrainingById
-//	@Tags		karyawan-training
+//	@Summary	Get Training By Id
+//	@Id			GetTrainingById
+//	@Tags		training
 //	@Accept		json
 //	@Produce	json
 //	@Param		id	path		int	true	"Training ID"
@@ -91,15 +91,15 @@ func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context)
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	404	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/karyawan-training/{id} [get]
-func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context) {
+//	@Router		/training/{id} [get]
+func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
 		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
 		return
 	}
 
-	result, code, err := ctrl.svc.GetEmployeeTrainingById(id)
+	result, code, err := ctrl.svc.GetTrainingById(id)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -108,11 +108,11 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context
 	util.SetSuccessResponse(ctx, result)
 }
 
-// GetEmployeeTrainingList godoc
+// GetTrainingList godoc
 //
-//	@Summary	Get Karyawan Training List
-//	@Id			GetEmployeeTrainingList
-//	@Tags		karyawan-training
+//	@Summary	Get Training List
+//	@Id			GetTrainingList
+//	@Tags		training
 //	@Accept		json
 //	@Produce	json
 //	@Param		page		query		int		false	"Page"
@@ -122,8 +122,8 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/karyawan-training/list [get]
-func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context) {
+//	@Router		/training/list [get]
+func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
 	err := ctx.Bind(&req)
@@ -132,7 +132,7 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context
 		return
 	}
 
-	result, code, err := ctrl.svc.GetEmployeeTrainingList(req)
+	result, code, err := ctrl.svc.GetTrainingList(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -141,19 +141,19 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context
 	util.SetSuccessResponse(ctx, result)
 }
 
-// DeleteEmployeeTraining godoc
+// DeleteTraining godoc
 //
-//	@Summary	Delete Karyawan Training
-//	@Id			DeleteEmployeeTraining
-//	@Tags		karyawan-training
+//	@Summary	Delete Training
+//	@Id			DeleteTraining
+//	@Tags		training
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		request.IdRequest	true	"Delete Karyawan Training Request"
+//	@Param		request	body		request.IdRequest	true	"Delete Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan-training/delete [delete]
-func (ctrl *EmployeeTrainingController) DeleteEmployeeTraining(ctx *gin.Context) {
+//	@Router		/training/delete [delete]
+func (ctrl *TrainingController) DeleteTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
@@ -162,7 +162,7 @@ func (ctrl *EmployeeTrainingController) DeleteEmployeeTraining(ctx *gin.Context)
 		return
 	}
 
-	code, err := ctrl.svc.DeleteEmployeeTraining(req)
+	code, err := ctrl.svc.DeleteTraining(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
