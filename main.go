@@ -3,7 +3,8 @@ package main
 import (
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/middleware"
-	"idstar-idp/rest-api/app/router"
+	empTraining "idstar-idp/rest-api/app/router/emptraining"
+	fileUpload "idstar-idp/rest-api/app/router/fileupload"
 	"sync"
 
 	"github.com/gin-gonic/gin"
@@ -25,31 +26,43 @@ func main() {
 	logger := middleware.LoggerMiddleware{}
 	r.Use(logger.Logger())
 
+	// group routing /user-register
+
+	// group routing /user-login
+
+	// group routing /forget-password
+
 	// group routing /v1/idstar
 	idstar := r.Group("/v1/idstar")
 	{
 		// group routing /karyawan
 		employee := idstar.Group("/karyawan")
 		{
-			router.SetEmployeeRouter(employee)
+			empTraining.SetEmployeeRouter(employee)
 		}
 
 		// group routing /rekening
 		account := idstar.Group("/rekening")
 		{
-			router.SetAccountRouter(account)
+			empTraining.SetAccountRouter(account)
 		}
 
 		// group routing /training
 		training := idstar.Group("/training")
 		{
-			router.SetTrainingRouter(training)
+			empTraining.SetTrainingRouter(training)
 		}
 
 		// group routing /karyawan-training
 		employeeTraining := idstar.Group("/karyawan-training")
 		{
-			router.SetEmployeeTrainingRouter(employeeTraining)
+			empTraining.SetEmployeeTrainingRouter(employeeTraining)
+		}
+
+		// group routing /file
+		file := idstar.Group("/file")
+		{
+			fileUpload.SetFileUploadRouter(file)
 		}
 	}
 
@@ -61,7 +74,7 @@ func main() {
 func initApp() {
 	once.Do(func() {
 		config.LoadConfigFile()
-		config.InitDB()
+		config.InitTrainingDB()
 		config.InitSwagger()
 	})
 }
