@@ -17,6 +17,7 @@ import (
 //	@Tags		file
 //	@Accept		*/*
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		file	formData	file	true	"File Upload Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -57,6 +58,7 @@ func UploadFile(ctx *gin.Context) {
 //	@Tags		file
 //	@Accept		json
 //	@Produce	*/*
+//	@Security	ApiKeyAuth
 //	@Param		filename	path		string	true	"File Name"
 //	@Response	200			{file}		file
 //	@Response	404			{object}	response.ApiResponse
@@ -89,6 +91,7 @@ func ShowFile(ctx *gin.Context) {
 //	@Tags		file
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		filename	path		string	true	"File Name"
 //	@Response	200			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse

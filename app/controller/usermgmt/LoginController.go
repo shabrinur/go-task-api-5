@@ -19,6 +19,18 @@ func NewLoginController(svc *service.LoginService) *LoginController {
 	return &LoginController{svc}
 }
 
+// Login godoc
+//
+//	@Summary	Login
+//	@Id			Login
+//	@Tags		usermanagement
+//	@Accept		json
+//	@Produce	json
+//	@Param		request	body		login.LoginUserPassRequest	true	"Login Request"
+//	@Response	200		{object}	response.ApiResponse
+//	@Response	400		{object}	response.ApiResponse
+//	@Response	500		{object}	response.ApiResponse
+//	@Router		/v1/user-login/login [post]
 func (ctrl *LoginController) Login(ctx *gin.Context) {
 	bodyAsByteArray, _ := io.ReadAll(ctx.Request.Body)
 	jsonMap := make(map[string]interface{})

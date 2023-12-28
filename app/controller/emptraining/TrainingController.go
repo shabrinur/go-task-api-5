@@ -25,6 +25,7 @@ func NewTrainingController(svc *service.TrainingService) *TrainingController {
 //	@Tags		training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.TrainingRequest	true	"Create Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -55,6 +56,7 @@ func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 //	@Tags		training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.TrainingRequest	true	"Update Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -86,6 +88,7 @@ func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 //	@Tags		training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		id	path		int	true	"Training ID"
 //	@Response	200	{object}	response.ApiResponse
 //	@Response	400	{object}	response.ApiResponse
@@ -115,6 +118,7 @@ func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 //	@Tags		training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		page		query		int		false	"Page"
 //	@Param		size		query		int		false	"Size"
 //	@Param		field		query		string	false	"Field"
@@ -148,6 +152,7 @@ func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 //	@Tags		training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.IdRequest	true	"Delete Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse

@@ -25,6 +25,7 @@ func NewEmployeeTrainingController(svc *service.EmployeeTrainingService) *Employ
 //	@Tags		karyawan-training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.EmployeeTrainingRequest	true	"Create Karyawan Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -55,6 +56,7 @@ func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context)
 //	@Tags		karyawan-training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.EmployeeTrainingRequest	true	"Update Karyawan Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -86,6 +88,7 @@ func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context)
 //	@Tags		karyawan-training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		id	path		int	true	"Training ID"
 //	@Response	200	{object}	response.ApiResponse
 //	@Response	400	{object}	response.ApiResponse
@@ -115,6 +118,7 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context
 //	@Tags		karyawan-training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		page		query		int		false	"Page"
 //	@Param		size		query		int		false	"Size"
 //	@Param		field		query		string	false	"Field"
@@ -148,6 +152,7 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context
 //	@Tags		karyawan-training
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.IdRequest	true	"Delete Karyawan Training Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse

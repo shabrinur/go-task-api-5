@@ -17,6 +17,11 @@ const docTemplate = `{
     "paths": {
         "/v1/file/delete/{filename}": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -55,6 +60,11 @@ const docTemplate = `{
         },
         "/v1/file/show/{filename}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -93,6 +103,11 @@ const docTemplate = `{
         },
         "/v1/file/upload": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "*/*"
                 ],
@@ -137,6 +152,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan-training/delete": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -183,6 +203,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan-training/list": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -244,6 +269,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan-training/save": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -290,6 +320,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan-training/update": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -342,6 +377,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan-training/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -392,6 +432,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan/delete": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -438,6 +483,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan/list": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -499,6 +549,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan/save": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -545,6 +600,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan/update": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -597,6 +657,11 @@ const docTemplate = `{
         },
         "/v1/idstar/karyawan/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -647,6 +712,11 @@ const docTemplate = `{
         },
         "/v1/idstar/rekening/delete": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -693,6 +763,11 @@ const docTemplate = `{
         },
         "/v1/idstar/rekening/list": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -754,6 +829,11 @@ const docTemplate = `{
         },
         "/v1/idstar/rekening/save": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -800,6 +880,11 @@ const docTemplate = `{
         },
         "/v1/idstar/rekening/update": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -852,6 +937,11 @@ const docTemplate = `{
         },
         "/v1/idstar/rekening/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -902,6 +992,11 @@ const docTemplate = `{
         },
         "/v1/idstar/training/delete": {
             "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -948,6 +1043,11 @@ const docTemplate = `{
         },
         "/v1/idstar/training/list": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -1009,6 +1109,11 @@ const docTemplate = `{
         },
         "/v1/idstar/training/save": {
             "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -1055,6 +1160,11 @@ const docTemplate = `{
         },
         "/v1/idstar/training/update": {
             "put": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -1107,6 +1217,11 @@ const docTemplate = `{
         },
         "/v1/idstar/training/{id}": {
             "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
                 "consumes": [
                     "application/json"
                 ],
@@ -1154,6 +1269,52 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/user-login/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "usermanagement"
+                ],
+                "summary": "Login",
+                "operationId": "Login",
+                "parameters": [
+                    {
+                        "description": "Login Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.LoginUserPassRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -1178,6 +1339,26 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "field": {
+                    "type": "string"
+                }
+            }
+        },
+        "login.LoginUserPassRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string",
+                    "maxLength": 16,
+                    "minLength": 8
+                },
+                "username": {
                     "type": "string"
                 }
             }

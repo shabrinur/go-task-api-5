@@ -50,10 +50,33 @@ func ValidateToken(tokenString string, jwtKey string) (*dto.AuthTokenPayload, er
 		return nil, errors.New(fmt.Sprint("error on parsing token: ", err.Error()))
 	}
 
-	claims, ok := token.Claims.(*dto.AuthTokenPayload)
+	tokenPayload, ok := token.Claims.(*dto.AuthTokenPayload)
 	if !ok || !token.Valid {
-		return claims, errors.New("token invalid; re-login to generate new token")
+		return tokenPayload, errors.New("token invalid; re-login to generate new token")
 	}
 
-	return claims, nil
+	return tokenPayload, nil
+}
+
+func CheckPermission(tokenPayload *dto.AuthTokenPayload, path string, method string) bool {
+	if strings.EqualFold(tokenPayload.RoleType, "superadmin") {
+		return true
+	} else {
+		permissions := tokenPayload.Permissions
+		for _, permission := range permissions {
+			if strings.HasPrefix(path, permission.Path) {
+				switch method {
+				case "DELETE":
+					return permission.DeleteAllowed
+				case "PUT":
+					return permission.PutAllowed
+				case "POST":
+					return permission.PostAllowed
+				case "GET":
+					return permission.GetAllowed
+				}
+			}
+		}
+	}
+	return false
 }

@@ -34,6 +34,8 @@ func main() {
 
 	// declare middleware
 	logger := middleware.LoggerMiddleware{}
+	auth := middleware.NewAuthMiddleware()
+
 	r.Use(logger.Logger())
 
 	// group routing /user-login
@@ -43,7 +45,7 @@ func main() {
 	}
 	
 	// group routing /v1/idstar
-	idstar := r.Group("/v1/idstar")
+	idstar := r.Group("/v1/idstar", auth.Authenticate())
 	{
 		// group routing /karyawan
 		employee := idstar.Group("/karyawan")
@@ -71,7 +73,7 @@ func main() {
 	}
 
 	// group routing /v1/file
-	file := r.Group("/v1/file")
+	file := r.Group("/v1/file", auth.Authenticate())
 	{
 		fileUpload.SetFileUploadRouter(file)
 	}

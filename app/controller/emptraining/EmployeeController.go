@@ -25,6 +25,7 @@ func NewEmployeeController(svc *service.EmployeeService) *EmployeeController {
 //	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.EmployeeRequest	true	"Create Karyawan Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -55,6 +56,7 @@ func (ctrl *EmployeeController) CreateEmployee(ctx *gin.Context) {
 //	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.EmployeeRequest	true	"Update Karyawan Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -86,6 +88,7 @@ func (ctrl *EmployeeController) UpdateEmployee(ctx *gin.Context) {
 //	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		id	path		int	true	"Karyawan ID"
 //	@Response	200	{object}	response.ApiResponse
 //	@Response	400	{object}	response.ApiResponse
@@ -115,6 +118,7 @@ func (ctrl *EmployeeController) GetEmployeeById(ctx *gin.Context) {
 //	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		page		query		int		false	"Page"
 //	@Param		size		query		int		false	"Size"
 //	@Param		field		query		string	false	"Field"
@@ -148,6 +152,7 @@ func (ctrl *EmployeeController) GetEmployeeList(ctx *gin.Context) {
 //	@Tags		karyawan
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.IdRequest	true	"Delete Karyawan Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse

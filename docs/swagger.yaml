@@ -15,6 +15,20 @@ definitions:
       field:
         type: string
     type: object
+  login.LoginUserPassRequest:
+    properties:
+      name:
+        type: string
+      password:
+        maxLength: 16
+        minLength: 8
+        type: string
+      username:
+        type: string
+    required:
+    - password
+    - username
+    type: object
   request.AccountRequest:
     properties:
       id:
@@ -149,6 +163,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Delete Uploaded File
       tags:
       - file
@@ -174,6 +190,8 @@ paths:
           description: Not Found
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Show Uploaded File
       tags:
       - file
@@ -203,6 +221,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Upload File
       tags:
       - file
@@ -236,6 +256,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Karyawan Training By Id
       tags:
       - karyawan-training
@@ -266,6 +288,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Delete Karyawan Training
       tags:
       - karyawan-training
@@ -306,6 +330,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Karyawan Training List
       tags:
       - karyawan-training
@@ -336,6 +362,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Create Karyawan Training
       tags:
       - karyawan-training
@@ -370,6 +398,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Update Karyawan Training
       tags:
       - karyawan-training
@@ -403,6 +433,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Karyawan By Id
       tags:
       - karyawan
@@ -433,6 +465,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Delete Karyawan
       tags:
       - karyawan
@@ -473,6 +507,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Karyawan List
       tags:
       - karyawan
@@ -503,6 +539,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Create Karyawan
       tags:
       - karyawan
@@ -537,6 +575,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Update Karyawan
       tags:
       - karyawan
@@ -570,6 +610,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Rekening By Id
       tags:
       - rekening
@@ -600,6 +642,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Delete Rekening
       tags:
       - rekening
@@ -640,6 +684,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Rekening List
       tags:
       - rekening
@@ -670,6 +716,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Create Rekening
       tags:
       - rekening
@@ -704,6 +752,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Update Rekening
       tags:
       - rekening
@@ -737,6 +787,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Training By Id
       tags:
       - training
@@ -767,6 +819,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Delete Training
       tags:
       - training
@@ -807,6 +861,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Get Training List
       tags:
       - training
@@ -837,6 +893,8 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Create Training
       tags:
       - training
@@ -871,7 +929,39 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
+      security:
+      - ApiKeyAuth: []
       summary: Update Training
       tags:
       - training
+  /v1/user-login/login:
+    post:
+      consumes:
+      - application/json
+      operationId: Login
+      parameters:
+      - description: Login Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.LoginUserPassRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Login
+      tags:
+      - usermanagement
 swagger: "2.0"

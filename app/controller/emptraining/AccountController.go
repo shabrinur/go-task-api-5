@@ -25,6 +25,7 @@ func NewAccountController(svc *service.AccountService) *AccountController {
 //	@Tags		rekening
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.AccountRequest	true	"Create Rekening Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -55,6 +56,7 @@ func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 //	@Tags		rekening
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.AccountRequest	true	"Update Rekening Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
@@ -86,6 +88,7 @@ func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 //	@Tags		rekening
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		id	path		int	true	"Rekening ID"
 //	@Response	200	{object}	response.ApiResponse
 //	@Response	400	{object}	response.ApiResponse
@@ -115,6 +118,7 @@ func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 //	@Tags		rekening
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		page		query		int		false	"Page"
 //	@Param		size		query		int		false	"Size"
 //	@Param		field		query		string	false	"Field"
@@ -148,6 +152,7 @@ func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 //	@Tags		rekening
 //	@Accept		json
 //	@Produce	json
+//	@Security	ApiKeyAuth
 //	@Param		request	body		request.IdRequest	true	"Delete Rekening Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
