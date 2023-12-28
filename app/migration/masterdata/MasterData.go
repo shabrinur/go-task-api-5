@@ -159,12 +159,16 @@ func (d *PopulateRoleModule) Exec(db *gorm.DB) error {
 			for _, module := range modules {
 				if strings.EqualFold(role.RoleType, module.Type) {
 					roleModule := &model.RoleModuleModel{
-						IdRole:        role.ID,
-						IdModule:      module.ID,
-						PostAllowed:   sql.NullBool{Valid: true, Bool: true},
-						PutAllowed:    sql.NullBool{Valid: true, Bool: true},
-						GetAllowed:    sql.NullBool{Valid: true, Bool: true},
-						DeleteAllowed: sql.NullBool{Valid: true, Bool: true},
+						IdRole:      role.ID,
+						IdModule:    module.ID,
+						PostAllowed: sql.NullBool{Valid: true, Bool: true},
+						PutAllowed:  sql.NullBool{Valid: true, Bool: true},
+						GetAllowed:  sql.NullBool{Valid: true, Bool: true},
+					}
+					if strings.EqualFold(role.RoleType, "user") {
+						roleModule.DeleteAllowed = sql.NullBool{Valid: true, Bool: false}
+					} else {
+						roleModule.DeleteAllowed = sql.NullBool{Valid: true, Bool: true}
 					}
 					result := db.Create(&roleModule)
 					if result.Error != nil {

@@ -13,11 +13,11 @@ import (
 var TrainingDB *gorm.DB
 
 func InitTrainingDB() {
-	host := getConfigValue("postgres.training.host")
-	port := getConfigValue("postgres.training.port")
-	dbname := getConfigValue("postgres.training.dbName")
-	user := getConfigValue("postgres.training.user")
-	password := getConfigValue("postgres.training.password")
+	host := GetConfigValue("postgres.training.host")
+	port := GetConfigValue("postgres.training.port")
+	dbname := GetConfigValue("postgres.training.dbName")
+	user := GetConfigValue("postgres.training.user")
+	password := GetConfigValue("postgres.training.password")
 
 	// create postgres connection
 	conn := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable TimeZone=Asia/Jakarta"

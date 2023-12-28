@@ -16,6 +16,10 @@ func LoadConfigFile() {
 	}
 }
 
-func getConfigValue(configKey string) string {
+func GetConfigValue(configKey string) string {
 	return viper.GetViper().GetString(configKey)
+}
+
+func GetConfigIntValue(configKey string) int {
+	return viper.GetViper().GetInt(configKey)
 }

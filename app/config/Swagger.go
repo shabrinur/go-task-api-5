@@ -3,10 +3,10 @@ package config
 import "idstar-idp/rest-api/docs"
 
 func InitSwagger() {
-	docs.SwaggerInfo.Title = getConfigValue("swagger.title")
-	docs.SwaggerInfo.Description = getConfigValue("swagger.description")
-	docs.SwaggerInfo.Version = getConfigValue("swagger.version")
-	docs.SwaggerInfo.Host = getConfigValue("swagger.host")
-	docs.SwaggerInfo.BasePath = getConfigValue("swagger.basePath")
+	docs.SwaggerInfo.Title = GetConfigValue("swagger.title")
+	docs.SwaggerInfo.Description = GetConfigValue("swagger.description")
+	docs.SwaggerInfo.Version = GetConfigValue("swagger.version")
+	docs.SwaggerInfo.Host = GetConfigValue("swagger.host")
+	docs.SwaggerInfo.BasePath = GetConfigValue("swagger.basePath")
 	docs.SwaggerInfo.Schemes = []string{"http"}
 }

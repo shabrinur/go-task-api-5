@@ -6,6 +6,7 @@ import (
 	"idstar-idp/rest-api/app/migration"
 	empTraining "idstar-idp/rest-api/app/router/emptraining"
 	fileUpload "idstar-idp/rest-api/app/router/fileupload"
+	userMgmt "idstar-idp/rest-api/app/router/usermgmt"
 	"idstar-idp/rest-api/app/util"
 	"sync"
 
@@ -35,6 +36,12 @@ func main() {
 	logger := middleware.LoggerMiddleware{}
 	r.Use(logger.Logger())
 
+	// group routing /user-login
+	login := r.Group("/v1/user-login")
+	{
+		userMgmt.SetLoginRouter(login, pwdUtil)
+	}
+	
 	// group routing /v1/idstar
 	idstar := r.Group("/v1/idstar")
 	{

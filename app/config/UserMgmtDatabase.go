@@ -13,11 +13,11 @@ import (
 var UserMgmtDB *gorm.DB
 
 func InitUserMgmtDB() {
-	host := getConfigValue("postgres.usermanagement.host")
-	port := getConfigValue("postgres.usermanagement.port")
-	dbname := getConfigValue("postgres.usermanagement.dbName")
-	user := getConfigValue("postgres.usermanagement.user")
-	password := getConfigValue("postgres.usermanagement.password")
+	host := GetConfigValue("postgres.usermanagement.host")
+	port := GetConfigValue("postgres.usermanagement.port")
+	dbname := GetConfigValue("postgres.usermanagement.dbName")
+	user := GetConfigValue("postgres.usermanagement.user")
+	password := GetConfigValue("postgres.usermanagement.password")
 
 	// create postgres connection
 	conn := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=disable TimeZone=Asia/Jakarta"
