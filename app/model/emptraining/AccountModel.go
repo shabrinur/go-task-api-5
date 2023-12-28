@@ -19,5 +19,5 @@ type AccountModel struct {
 }
 
 func (c *AccountModel) TableName() string {
-	return "rekening"
+	return "training.rekening"
 }

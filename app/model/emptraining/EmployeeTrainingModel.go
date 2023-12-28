@@ -19,5 +19,5 @@ type EmployeeTrainingModel struct {
 }
 
 func (c *EmployeeTrainingModel) TableName() string {
-	return "karyawan_training"
+	return "training.karyawan_training"
 }

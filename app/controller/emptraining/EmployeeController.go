@@ -29,7 +29,7 @@ func NewEmployeeController(svc *service.EmployeeService) *EmployeeController {
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan/save [post]
+//	@Router		/v1/idstar/karyawan/save [post]
 func (ctrl *EmployeeController) CreateEmployee(ctx *gin.Context) {
 	req := request.EmployeeRequest{}
 
@@ -60,7 +60,7 @@ func (ctrl *EmployeeController) CreateEmployee(ctx *gin.Context) {
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	404		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan/update [put]
+//	@Router		/v1/idstar/karyawan/update [put]
 func (ctrl *EmployeeController) UpdateEmployee(ctx *gin.Context) {
 	req := request.EmployeeRequest{}
 
@@ -91,7 +91,7 @@ func (ctrl *EmployeeController) UpdateEmployee(ctx *gin.Context) {
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	404	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/karyawan/{id} [get]
+//	@Router		/v1/idstar/karyawan/{id} [get]
 func (ctrl *EmployeeController) GetEmployeeById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -122,7 +122,7 @@ func (ctrl *EmployeeController) GetEmployeeById(ctx *gin.Context) {
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/karyawan/list [get]
+//	@Router		/v1/idstar/karyawan/list [get]
 func (ctrl *EmployeeController) GetEmployeeList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -152,7 +152,7 @@ func (ctrl *EmployeeController) GetEmployeeList(ctx *gin.Context) {
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan/delete [delete]
+//	@Router		/v1/idstar/karyawan/delete [delete]
 func (ctrl *EmployeeController) DeleteEmployee(ctx *gin.Context) {
 	req := request.IdRequest{}
 

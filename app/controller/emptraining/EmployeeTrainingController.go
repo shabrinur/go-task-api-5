@@ -29,7 +29,7 @@ func NewEmployeeTrainingController(svc *service.EmployeeTrainingService) *Employ
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan-training/save [post]
+//	@Router		/v1/idstar/karyawan-training/save [post]
 func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context) {
 	req := request.EmployeeTrainingRequest{}
 
@@ -60,7 +60,7 @@ func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context)
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	404		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan-training/update [put]
+//	@Router		/v1/idstar/karyawan-training/update [put]
 func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context) {
 	req := request.EmployeeTrainingRequest{}
 
@@ -91,7 +91,7 @@ func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context)
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	404	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/karyawan-training/{id} [get]
+//	@Router		/v1/idstar/karyawan-training/{id} [get]
 func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -122,7 +122,7 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/karyawan-training/list [get]
+//	@Router		/v1/idstar/karyawan-training/list [get]
 func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -152,7 +152,7 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/karyawan-training/delete [delete]
+//	@Router		/v1/idstar/karyawan-training/delete [delete]
 func (ctrl *EmployeeTrainingController) DeleteEmployeeTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 

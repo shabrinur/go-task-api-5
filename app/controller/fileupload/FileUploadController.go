@@ -21,7 +21,7 @@ import (
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/file/upload [post]
+//	@Router		/v1/file/upload [post]
 func UploadFile(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
@@ -43,7 +43,7 @@ func UploadFile(ctx *gin.Context) {
 
 	uploadData := response.UploadData{
 		FileName:        savedFileName,
-		FileDownloadUri: ctx.Request.Host + "/v1/idstar/file/show/" + savedFileName,
+		FileDownloadUri: ctx.Request.Host + "/v1/file/show/" + savedFileName,
 		FileType:        file.Header.Get("Content-Type"),
 		Size:            file.Size,
 	}
@@ -60,7 +60,7 @@ func UploadFile(ctx *gin.Context) {
 //	@Param		filename	path		string	true	"File Name"
 //	@Response	200			{file}		file
 //	@Response	404			{object}	response.ApiResponse
-//	@Router		/file/show/{filename} [get]
+//	@Router		/v1/file/show/{filename} [get]
 func ShowFile(ctx *gin.Context) {
 	fileName := ctx.Param("filename")
 
@@ -92,7 +92,7 @@ func ShowFile(ctx *gin.Context) {
 //	@Param		filename	path		string	true	"File Name"
 //	@Response	200			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/file/delete/{filename} [delete]
+//	@Router		/v1/file/delete/{filename} [delete]
 func DeleteFile(ctx *gin.Context) {
 	fileName := ctx.Param("filename")
 

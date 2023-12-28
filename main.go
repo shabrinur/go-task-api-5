@@ -3,8 +3,10 @@ package main
 import (
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/middleware"
+	"idstar-idp/rest-api/app/migration"
 	empTraining "idstar-idp/rest-api/app/router/emptraining"
 	fileUpload "idstar-idp/rest-api/app/router/fileupload"
+	"idstar-idp/rest-api/app/util"
 	"sync"
 
 	"github.com/gin-gonic/gin"
@@ -16,21 +18,22 @@ import (
 var once sync.Once
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 
 	initApp()
 
+	// declare util
+	pwdUtil := util.PasswordUtil{}
+
+	if err := migration.Exec(pwdUtil); err != nil {
+		panic(err)
+	}
+
 	r := gin.Default()
 
-	// add middleware
+	// declare middleware
 	logger := middleware.LoggerMiddleware{}
 	r.Use(logger.Logger())
-
-	// group routing /user-register
-
-	// group routing /user-login
-
-	// group routing /forget-password
 
 	// group routing /v1/idstar
 	idstar := r.Group("/v1/idstar")
@@ -58,12 +61,12 @@ func main() {
 		{
 			empTraining.SetEmployeeTrainingRouter(employeeTraining)
 		}
+	}
 
-		// group routing /file
-		file := idstar.Group("/file")
-		{
-			fileUpload.SetFileUploadRouter(file)
-		}
+	// group routing /v1/file
+	file := r.Group("/v1/file")
+	{
+		fileUpload.SetFileUploadRouter(file)
 	}
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
@@ -75,6 +78,7 @@ func initApp() {
 	once.Do(func() {
 		config.LoadConfigFile()
 		config.InitTrainingDB()
+		config.InitUserMgmtDB()
 		config.InitSwagger()
 	})
 }

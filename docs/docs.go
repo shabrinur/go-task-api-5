@@ -15,7 +15,127 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/karyawan-training/delete": {
+        "/v1/file/delete/{filename}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Delete Uploaded File",
+                "operationId": "DeleteFile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "File Name",
+                        "name": "filename",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/file/show/{filename}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "*/*"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Show Uploaded File",
+                "operationId": "ShowFile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "File Name",
+                        "name": "filename",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/file/upload": {
+            "post": {
+                "consumes": [
+                    "*/*"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "file"
+                ],
+                "summary": "Upload File",
+                "operationId": "UploadFile",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "File Upload Request",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/idstar/karyawan-training/delete": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -61,7 +181,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan-training/list": {
+        "/v1/idstar/karyawan-training/list": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -122,7 +242,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan-training/save": {
+        "/v1/idstar/karyawan-training/save": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -168,7 +288,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan-training/update": {
+        "/v1/idstar/karyawan-training/update": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -220,7 +340,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan-training/{id}": {
+        "/v1/idstar/karyawan-training/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -270,7 +390,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan/delete": {
+        "/v1/idstar/karyawan/delete": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -316,7 +436,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan/list": {
+        "/v1/idstar/karyawan/list": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -377,7 +497,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan/save": {
+        "/v1/idstar/karyawan/save": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -423,7 +543,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan/update": {
+        "/v1/idstar/karyawan/update": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -475,7 +595,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/karyawan/{id}": {
+        "/v1/idstar/karyawan/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -525,7 +645,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/rekening/delete": {
+        "/v1/idstar/rekening/delete": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -571,7 +691,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/rekening/list": {
+        "/v1/idstar/rekening/list": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -632,7 +752,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/rekening/save": {
+        "/v1/idstar/rekening/save": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -678,7 +798,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/rekening/update": {
+        "/v1/idstar/rekening/update": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -730,7 +850,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/rekening/{id}": {
+        "/v1/idstar/rekening/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -780,7 +900,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/training/delete": {
+        "/v1/idstar/training/delete": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -826,7 +946,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/training/list": {
+        "/v1/idstar/training/list": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -887,7 +1007,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/training/save": {
+        "/v1/idstar/training/save": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -933,7 +1053,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/training/update": {
+        "/v1/idstar/training/update": {
             "put": {
                 "consumes": [
                     "application/json"
@@ -985,7 +1105,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/training/{id}": {
+        "/v1/idstar/training/{id}": {
             "get": {
                 "consumes": [
                     "application/json"

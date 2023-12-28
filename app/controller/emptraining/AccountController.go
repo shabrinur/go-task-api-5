@@ -29,7 +29,7 @@ func NewAccountController(svc *service.AccountService) *AccountController {
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/rekening/save [post]
+//	@Router		/v1/idstar/rekening/save [post]
 func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 	req := request.AccountRequest{}
 
@@ -60,7 +60,7 @@ func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	404		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/rekening/update [put]
+//	@Router		/v1/idstar/rekening/update [put]
 func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 	req := request.AccountRequest{}
 
@@ -91,7 +91,7 @@ func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	404	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/rekening/{id} [get]
+//	@Router		/v1/idstar/rekening/{id} [get]
 func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -122,7 +122,7 @@ func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/rekening/list [get]
+//	@Router		/v1/idstar/rekening/list [get]
 func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -152,7 +152,7 @@ func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/rekening/delete [delete]
+//	@Router		/v1/idstar/rekening/delete [delete]
 func (ctrl *AccountController) DeleteAccount(ctx *gin.Context) {
 	req := request.IdRequest{}
 

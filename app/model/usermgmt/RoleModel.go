@@ -1,20 +1,22 @@
 package model
 
 import (
+	"database/sql"
 	"time"
 
 	"gorm.io/gorm"
 )
 
-type TrainingModel struct {
+type RoleModel struct {
 	ID          uint           `json:"id" gorm:"primaryKey;type:uint;autoIncrement"`
 	CreatedDate time.Time      `json:"created_date" gorm:"autoCreateTime:true;not null"`
 	UpdatedDate *time.Time     `json:"updated_date" gorm:"autoUpdateTime:true"`
 	DeletedDate gorm.DeletedAt `json:"deleted_date" gorm:"softDelete:true"`
-	Pengajar    string         `json:"pengajar" gorm:"column:pengajar;type:varchar(100);required;not null"`
-	Tema        string         `json:"tema" gorm:"column:tema;type:varchar(100);required;not null"`
+	Name        string         `json:"name" gorm:"type:varchar(50);required;unique;not null"`
+	RoleType    string         `json:"roleType" gorm:"type:varchar(20);default:user"`
+	IsDefault   sql.NullBool   `json:"-" gorm:"default:false"`
 }
 
-func (c *TrainingModel) TableName() string {
-	return "training.training"
+func (c *RoleModel) TableName() string {
+	return "usermanagement.oauth_role"
 }

@@ -29,7 +29,7 @@ func NewTrainingController(svc *service.TrainingService) *TrainingController {
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/training/save [post]
+//	@Router		/v1/idstar/training/save [post]
 func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 	req := request.TrainingRequest{}
 
@@ -60,7 +60,7 @@ func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	404		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/training/update [put]
+//	@Router		/v1/idstar/training/update [put]
 func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 	req := request.TrainingRequest{}
 
@@ -91,7 +91,7 @@ func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	404	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/training/{id} [get]
+//	@Router		/v1/idstar/training/{id} [get]
 func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -122,7 +122,7 @@ func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 //	@Response	200			{object}	response.PaginationData
 //	@Response	400			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
-//	@Router		/training/list [get]
+//	@Router		/v1/idstar/training/list [get]
 func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -152,7 +152,7 @@ func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/training/delete [delete]
+//	@Router		/v1/idstar/training/delete [delete]
 func (ctrl *TrainingController) DeleteTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 
