@@ -6,7 +6,8 @@ import (
 	"idstar-idp/rest-api/app/util"
 )
 
-func Exec(pwdUtil util.PasswordUtil) error {
+func Exec() error {
+	pwdUtil := util.PasswordUtil{}
 	db := config.GetUserMgmtDB()
 
 	populateRole := masterdata.PopulateRole{}

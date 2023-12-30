@@ -15,8 +15,7 @@ import (
 )
 
 type LoginService struct {
-	userRepo           repository.UserRepository
-	roleModuleRepo     repository.RoleModuleRepository
+	userMgmtRepo       repository.UserMgmtRepository
 	pwdUtil            util.PasswordUtil
 	authTokenIssuer    string
 	authTokenAudiences string
@@ -24,11 +23,10 @@ type LoginService struct {
 	authTokenExpire    int
 }
 
-func NewLoginService(userRepo repository.UserRepository, roleModuleRepo repository.RoleModuleRepository, pwdUtil util.PasswordUtil) *LoginService {
+func NewLoginService(userMgmtRepo repository.UserMgmtRepository) *LoginService {
 	return &LoginService{
-		userRepo:           userRepo,
-		roleModuleRepo:     roleModuleRepo,
-		pwdUtil:            pwdUtil,
+		userMgmtRepo:       userMgmtRepo,
+		pwdUtil:            util.PasswordUtil{},
 		authTokenIssuer:    config.GetConfigValue("authtoken.issuer"),
 		authTokenAudiences: config.GetConfigValue("authtoken.audience"),
 		authTokenKey:       config.GetConfigValue("authtoken.secret"),
@@ -36,7 +34,7 @@ func NewLoginService(userRepo repository.UserRepository, roleModuleRepo reposito
 }
 
 func (svc *LoginService) getLoginData(user *model.UserModel, authMethod string) (*dto.LoginData, int, error) {
-	permissions, err := svc.roleModuleRepo.GetPermissions(user.Role.ID)
+	permissions, err := svc.userMgmtRepo.GetPermissions(user.Role.ID)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
@@ -74,7 +72,7 @@ func (svc *LoginService) LoginUserPassword(req login.LoginUserPassRequest) (*dto
 		return nil, http.StatusBadRequest, err
 	}
 
-	result, err := svc.userRepo.GetByUsername(req.Username)
+	result, err := svc.userMgmtRepo.GetByUsername(req.Username)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
 	}

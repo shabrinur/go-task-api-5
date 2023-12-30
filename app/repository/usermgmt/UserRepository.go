@@ -20,6 +20,30 @@ func NewUserRepository() *UserRepository {
 	}
 }
 
+func (repo *UserRepository) Create(dbObj *model.UserModel) (*model.UserModel, error) {
+	result := repo.db.Create(dbObj)
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error create new user, reason: ", result.Error.Error()))
+	}
+	return dbObj, nil
+}
+
+func (repo *UserRepository) UpdateOtp(dbObj *model.UserModel) (*model.UserModel, error) {
+	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Updates(model.UserModel{Otp: dbObj.Otp, OtpExpiredDate: dbObj.OtpExpiredDate})
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error update OTP for user: ", dbObj.Username, ", reason: ", result.Error.Error()))
+	}
+	return dbObj, nil
+}
+
+func (repo *UserRepository) UpdatePassword(dbObj *model.UserModel) (*model.UserModel, error) {
+	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Update("password", dbObj.Password)
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error update password for user: ", dbObj.Username, ", reason: ", result.Error.Error()))
+	}
+	return dbObj, nil
+}
+
 func (repo *UserRepository) GetByUsername(username string) (*model.UserModel, error) {
 	dbObj := &model.UserModel{}
 	result := repo.db.Where("username = ?", username).Preload(clause.Associations).Find(&dbObj)

@@ -4,6 +4,7 @@ import (
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/middleware"
 	"idstar-idp/rest-api/app/migration"
+	repository "idstar-idp/rest-api/app/repository/usermgmt"
 	empTraining "idstar-idp/rest-api/app/router/emptraining"
 	fileUpload "idstar-idp/rest-api/app/router/fileupload"
 	userMgmt "idstar-idp/rest-api/app/router/usermgmt"
@@ -23,10 +24,10 @@ func main() {
 
 	initApp()
 
-	// declare util
-	pwdUtil := util.PasswordUtil{}
+	// declare composite util
+	userMgmtUtil := util.InitUserMgmtUtil()
 
-	if err := migration.Exec(pwdUtil); err != nil {
+	if err := migration.Exec(); err != nil {
 		panic(err)
 	}
 
@@ -38,12 +39,20 @@ func main() {
 
 	r.Use(logger.Logger())
 
+	// declare composite repository
+	userMgmtRepo := repository.NewUserMgmtRepository()
+
 	// group routing /user-login
 	login := r.Group("/v1/user-login")
 	{
-		userMgmt.SetLoginRouter(login, pwdUtil)
+		userMgmt.SetLoginRouter(login, *userMgmtRepo)
 	}
-	
+
+	// group routing /forget-password
+	changePwd := r.Group("/v1/forget-password")
+	{
+		userMgmt.SetChangePasswordRouter(changePwd, *&userMgmtRepo.UserRepository, *userMgmtUtil)
+	}
 	// group routing /v1/idstar
 	idstar := r.Group("/v1/idstar", auth.Authenticate())
 	{

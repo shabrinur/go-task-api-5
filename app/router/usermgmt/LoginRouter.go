@@ -4,17 +4,14 @@ import (
 	controller "idstar-idp/rest-api/app/controller/usermgmt"
 	repository "idstar-idp/rest-api/app/repository/usermgmt"
 	service "idstar-idp/rest-api/app/service/usermgmt"
-	"idstar-idp/rest-api/app/util"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SetLoginRouter(group *gin.RouterGroup, pwdUtil util.PasswordUtil) {
+func SetLoginRouter(group *gin.RouterGroup, userMgmtRepo repository.UserMgmtRepository) {
 
-	userRepo := repository.NewUserRepository()
-	roleModuleRepo := repository.NewRoleModuleRepository()
-	svc := service.NewLoginService(*userRepo, *roleModuleRepo, pwdUtil)
+	svc := service.NewLoginService(userMgmtRepo)
 	ctrl := controller.NewLoginController(svc)
 
-	group.POST("/login", ctrl.Login)
+	group.POST("/login", ctrl.UserPassLogin)
 }
