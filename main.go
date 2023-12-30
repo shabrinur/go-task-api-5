@@ -8,6 +8,7 @@ import (
 	empTraining "idstar-idp/rest-api/app/router/emptraining"
 	fileUpload "idstar-idp/rest-api/app/router/fileupload"
 	userMgmt "idstar-idp/rest-api/app/router/usermgmt"
+	"idstar-idp/rest-api/app/service/usermgmt/helper"
 	"idstar-idp/rest-api/app/util"
 	"sync"
 
@@ -19,21 +20,18 @@ import (
 
 var once sync.Once
 
-//	@termsOfService				http://swagger.io/terms/
-//	@license.name				Apache 2.0
-//	@license.url				http://www.apache.org/licenses/LICENSE-2.0.html
-//	@externalDocs.description	OpenAPI
-//	@externalDocs.url			https://swagger.io/resources/open-api/
-//	@securityDefinitions.apikey	ApiKeyAuth
-//	@in							header
-//	@name						Authorization
+// @termsOfService				http://swagger.io/terms/
+// @license.name				Apache 2.0
+// @license.url				http://www.apache.org/licenses/LICENSE-2.0.html
+// @externalDocs.description	OpenAPI
+// @externalDocs.url			https://swagger.io/resources/open-api/
+// @securityDefinitions.apikey	ApiKeyAuth
+// @in							header
+// @name						Authorization
 func main() {
 	//gin.SetMode(gin.ReleaseMode)
 
 	initApp()
-
-	// declare composite util
-	userMgmtUtil := util.InitUserMgmtUtil()
 
 	if err := migration.Exec(); err != nil {
 		panic(err)
@@ -47,27 +45,55 @@ func main() {
 
 	r.Use(logger.Logger())
 
-	// declare composite repository
+	initUserMgmtRouting(r)
+	initIdstarRouting(r, *auth)
+	initFileRouting(r, *auth)
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	r.Run()
+}
+
+func initApp() {
+	once.Do(func() {
+		config.LoadConfigFile()
+		config.InitTrainingDB()
+		config.InitUserMgmtDB()
+		config.InitSwagger()
+	})
+}
+
+func initUserMgmtRouting(r *gin.Engine) {
+	// init user mgmt utils
+	userMgmtUtil := util.InitUserMgmtUtil()
+
+	// init user mgmt repositories
 	userMgmtRepo := repository.NewUserMgmtRepository()
 
-	// group routing /user-register
-	register := r.Group("/v1/user-register")
+	// declare helpers
+	otpHelper := helper.NewOtpHelper(userMgmtRepo.UserRepository, *userMgmtUtil)
+	userHelper := helper.NewUserHelper(userMgmtRepo.RoleModuleRepository, *otpHelper)
+
+	// group routing /registration
+	register := r.Group("/v1/registration")
 	{
-		userMgmt.SetRegistrationRouter(register, *userMgmtRepo, *userMgmtUtil)
+		userMgmt.SetRegistrationRouter(register, *userHelper)
 	}
 
 	// group routing /user-login
 	login := r.Group("/v1/user-login")
 	{
-		userMgmt.SetLoginRouter(login, *userMgmtRepo)
+		userMgmt.SetLoginRouter(login, *userHelper)
 	}
 
 	// group routing /forget-password
 	changePwd := r.Group("/v1/forget-password")
 	{
-		userMgmt.SetChangePasswordRouter(changePwd, userMgmtRepo.UserRepository, *userMgmtUtil)
+		userMgmt.SetChangePasswordRouter(changePwd, *otpHelper)
 	}
+}
 
+func initIdstarRouting(r *gin.Engine, auth middleware.AuthMiddleware) {
 	// group routing /v1/idstar
 	idstar := r.Group("/v1/idstar", auth.Authenticate())
 	{
@@ -95,23 +121,12 @@ func main() {
 			empTraining.SetEmployeeTrainingRouter(employeeTraining)
 		}
 	}
+}
 
+func initFileRouting(r *gin.Engine, auth middleware.AuthMiddleware) {
 	// group routing /v1/file
 	file := r.Group("/v1/file", auth.Authenticate())
 	{
 		fileUpload.SetFileUploadRouter(file)
 	}
-
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	r.Run()
-}
-
-func initApp() {
-	once.Do(func() {
-		config.LoadConfigFile()
-		config.InitTrainingDB()
-		config.InitUserMgmtDB()
-		config.InitSwagger()
-	})
 }

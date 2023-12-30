@@ -5,24 +5,18 @@ import (
 	"idstar-idp/rest-api/app/dto"
 	"idstar-idp/rest-api/app/dto/request/login"
 	"idstar-idp/rest-api/app/dto/response/rsdata"
-	repository "idstar-idp/rest-api/app/repository/usermgmt"
-	"idstar-idp/rest-api/app/util"
+	"idstar-idp/rest-api/app/service/usermgmt/helper"
 	"net/http"
 )
 
 type ChangePasswordService struct {
-	OtpService
-	mailUtil util.MailUtil
-	pwdUtil  util.PasswordUtil
+	helper.OtpHelper
 }
 
-func NewChangePasswordService(repo repository.UserRepository, userMgmtUtil util.UserMgmtUtil) *ChangePasswordService {
-	changePasswordService := &ChangePasswordService{
-		mailUtil: userMgmtUtil.MailUtil,
-		pwdUtil:  util.PasswordUtil{},
+func NewChangePasswordService(otpHelper helper.OtpHelper) *ChangePasswordService {
+	return &ChangePasswordService{
+		OtpHelper: otpHelper,
 	}
-	changePasswordService.OtpService = *NewOtpService(repo, userMgmtUtil.OtpUtil)
-	return changePasswordService
 }
 
 func (svc *ChangePasswordService) GetChangePasswordOtp(req login.OtpRequest) (interface{}, int, error) {
@@ -31,17 +25,17 @@ func (svc *ChangePasswordService) GetChangePasswordOtp(req login.OtpRequest) (in
 		return nil, http.StatusBadRequest, err
 	}
 
-	user, code, err := svc.getExistingUserData(req.Username, true)
+	user, code, err := svc.GetExistingUserData(req.Username, true)
 	if err != nil {
 		return nil, code, err
 	}
 
-	otp, otpExpiredOn, err := svc.saveUserOtp(user, false)
+	otp, otpExpiredOn, err := svc.SaveUserOtp(user, false)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
 
-	err = svc.mailUtil.SendChangePasswordMail(user.Username, user.Fullname, otp, otpExpiredOn)
+	err = svc.GetMailUtil().SendChangePasswordMail(user.Username, user.Fullname, otp, otpExpiredOn)
 	if err != nil {
 		otpInfo := &dto.OtpInfo{
 			Otp:       otp,
@@ -63,12 +57,12 @@ func (svc *ChangePasswordService) ValidatePasswordOtp(req login.OtpRequest) (int
 		return http.StatusBadRequest, err
 	}
 
-	user, code, err := svc.getExistingUserData(req.Username, true)
+	user, code, err := svc.GetExistingUserData(req.Username, true)
 	if err != nil {
 		return code, err
 	}
 
-	err = svc.otpUtil.ValidateOtp(req.Otp, user.Otp, user.OtpExpiredDate)
+	err = svc.GetOtpUtil().ValidateOtp(req.Otp, user.Otp, user.OtpExpiredDate)
 	if err != nil {
 		return http.StatusBadRequest, err
 	}
@@ -81,23 +75,23 @@ func (svc *ChangePasswordService) ChangePassword(req login.ChangePasswordRequest
 		return http.StatusBadRequest, err
 	}
 
-	user, code, err := svc.getExistingUserData(req.Username, true)
+	user, code, err := svc.GetExistingUserData(req.Username, true)
 	if err != nil {
 		return code, err
 	}
 
-	err = svc.otpUtil.ValidateOtp(req.Otp, user.Otp, user.OtpExpiredDate)
+	err = svc.GetOtpUtil().ValidateOtp(req.Otp, user.Otp, user.OtpExpiredDate)
 	if err != nil {
 		return http.StatusBadRequest, err
 	}
 
-	newPwd, err := svc.pwdUtil.Encrypt(req.NewPassword)
+	newPwd, err := svc.GetPwdUtil().Encrypt(req.NewPassword)
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}
 
 	user.Password = *newPwd
-	_, err = svc.repo.UpdatePassword(user)
+	_, err = svc.GetUserRepo().UpdatePassword(user)
 	if err != nil {
 		return http.StatusInternalServerError, err
 	}

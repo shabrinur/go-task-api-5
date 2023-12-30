@@ -18,19 +18,19 @@ func NewRegistrationController(svc *service.RegistrationService) *RegistrationCo
 	return &RegistrationController{svc}
 }
 
-// CreateUser godoc
+// RegisterUser godoc
 //
-//	@Summary	Create User
-//	@Id			CreateUser
-//	@Tags		user-register
+//	@Summary	Register User
+//	@Id			RegisterUser
+//	@Tags		registration
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		login.LoginUserPassRequest	true	"Create User Request"
+//	@Param		request	body		login.LoginUserPassRequest	true	"Register User Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/user-register [post]
-func (ctrl *RegistrationController) CreateUser(ctx *gin.Context) {
+//	@Router		/v1/registration [post]
+func (ctrl *RegistrationController) RegisterUser(ctx *gin.Context) {
 	req := login.LoginUserPassRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
@@ -39,7 +39,7 @@ func (ctrl *RegistrationController) CreateUser(ctx *gin.Context) {
 		return
 	}
 
-	result, code, err := ctrl.svc.CreateUser(req)
+	result, code, err := ctrl.svc.RegisterUser(req)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
@@ -51,14 +51,14 @@ func (ctrl *RegistrationController) CreateUser(ctx *gin.Context) {
 //
 //	@Summary	Get Activation Link
 //	@Id			GetActivationLink
-//	@Tags		user-register
+//	@Tags		registration
 //	@Accept		json
 //	@Produce	json
 //	@Param		go	query		string	true	"Encoded Activation Parameter"
 //	@Response	200	{object}	response.ApiResponse
 //	@Response	400	{object}	response.ApiResponse
 //	@Response	500	{object}	response.ApiResponse
-//	@Router		/v1/user-register/send-link [post]
+//	@Router		/v1/registration/send-link [post]
 func (ctrl *RegistrationController) GetActivationLink(ctx *gin.Context) {
 	req := login.OtpRequest{}
 
@@ -81,14 +81,14 @@ func (ctrl *RegistrationController) GetActivationLink(ctx *gin.Context) {
 //
 //	@Summary	Activate By Code
 //	@Id			ActivateByCode
-//	@Tags		user-register
+//	@Tags		registration
 //	@Accept		json
 //	@Produce	json
 //	@Param		request	body		login.OtpRequest	true	"Activation Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/user-register/activate [post]
+//	@Router		/v1/registration/activate [post]
 func (ctrl *RegistrationController) ActivateByCode(ctx *gin.Context) {
 	req := login.OtpRequest{}
 
@@ -111,14 +111,14 @@ func (ctrl *RegistrationController) ActivateByCode(ctx *gin.Context) {
 //
 //	@Summary	Activate By Link
 //	@Id			ActivateByLink
-//	@Tags		user-register
+//	@Tags		registration
 //	@Accept		json
 //	@Produce	json
 //	@Param		request	body		login.OtpRequest	true	"Activation Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/user-register/activate [get]
+//	@Router		/v1/registration/activate [get]
 func (ctrl *RegistrationController) ActivateByLink(ctx *gin.Context) {
 	encodedString := ctx.Query("go")
 	if encodedString == "" {

@@ -25,6 +25,7 @@ type OtpInfo struct {
 
 type TokenInfo struct {
 	AuthToken string    `json:"authToken,omitempty"`
+	TokenType string    `json:"tokenType,omitempty"`
 	IssuedAt  time.Time `json:"issuedAt,omitempty"`
 	ExpiredOn time.Time `json:"expiredOn,omitempty"`
 }

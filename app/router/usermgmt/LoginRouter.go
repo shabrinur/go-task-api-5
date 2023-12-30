@@ -2,15 +2,15 @@ package router
 
 import (
 	controller "idstar-idp/rest-api/app/controller/usermgmt"
-	repository "idstar-idp/rest-api/app/repository/usermgmt"
 	service "idstar-idp/rest-api/app/service/usermgmt"
+	"idstar-idp/rest-api/app/service/usermgmt/helper"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SetLoginRouter(group *gin.RouterGroup, userMgmtRepo repository.UserMgmtRepository) {
+func SetLoginRouter(group *gin.RouterGroup, userHelper helper.UserHelper) {
 
-	svc := service.NewLoginService(userMgmtRepo)
+	svc := service.NewLoginService(userHelper)
 	ctrl := controller.NewLoginController(svc)
 
 	group.POST("/login", ctrl.UserPassLogin)

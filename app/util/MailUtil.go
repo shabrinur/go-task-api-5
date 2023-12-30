@@ -49,7 +49,7 @@ func (c *MailUtil) sendMail(recipientEmail string, recipientName string, mailSub
 func (c *MailUtil) SendUserActivationMail(recipientEmail string, recipientName string, otp string, otpExpire time.Time) error {
 	subject := "User Activation - IDP Go REST API"
 	encodedParam := EncodeForActivationLink(recipientEmail, otp)
-	activationLink := c.baseUrl + "/v1/user-register/activate?go=" + encodedParam
+	activationLink := c.baseUrl + "/v1/registration/activate?go=" + encodedParam
 	body := "Dear " + recipientName + ",<br><br><br>" +
 		"You account has been successfully created. To complete registration process, please use this activation link:<br><br>" +
 		activationLink + "<br><br>" +

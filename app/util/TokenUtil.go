@@ -32,6 +32,7 @@ func GenerateToken(tokenTTL time.Duration, payload dto.AuthTokenPayload, issuer 
 
 	tokenInfo := &dto.TokenInfo{
 		AuthToken: tokenString,
+		TokenType: "Bearer",
 		IssuedAt:  time.Unix(iat.Unix(), 0),
 		ExpiredOn: time.Unix(exp.Unix(), 0),
 	}

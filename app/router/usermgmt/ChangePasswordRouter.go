@@ -2,16 +2,15 @@ package router
 
 import (
 	controller "idstar-idp/rest-api/app/controller/usermgmt"
-	repository "idstar-idp/rest-api/app/repository/usermgmt"
 	service "idstar-idp/rest-api/app/service/usermgmt"
-	"idstar-idp/rest-api/app/util"
+	"idstar-idp/rest-api/app/service/usermgmt/helper"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SetChangePasswordRouter(group *gin.RouterGroup, userRepo repository.UserRepository, userMgmtUtil util.UserMgmtUtil) {
+func SetChangePasswordRouter(group *gin.RouterGroup, otpHelper helper.OtpHelper) {
 
-	svc := service.NewChangePasswordService(userRepo, userMgmtUtil)
+	svc := service.NewChangePasswordService(otpHelper)
 	ctrl := controller.NewChangePasswordController(svc)
 
 	group.POST("/send-otp", ctrl.GetChangePasswordOtp)

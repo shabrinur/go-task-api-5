@@ -2,73 +2,21 @@ package service
 
 import (
 	"errors"
-	"fmt"
-	"idstar-idp/rest-api/app/config"
-	"idstar-idp/rest-api/app/dto"
 	"idstar-idp/rest-api/app/dto/request/login"
 	"idstar-idp/rest-api/app/dto/response/rsdata"
-	model "idstar-idp/rest-api/app/model/usermgmt"
-	repository "idstar-idp/rest-api/app/repository/usermgmt"
-	"idstar-idp/rest-api/app/util"
+	"idstar-idp/rest-api/app/service/usermgmt/helper"
 	"net/http"
 	"strings"
-	"time"
 )
 
 type LoginService struct {
-	userMgmtRepo       repository.UserMgmtRepository
-	pwdUtil            util.PasswordUtil
-	authTokenIssuer    string
-	authTokenAudiences string
-	authTokenKey       string
-	authTokenExpire    int
+	helper.UserHelper
 }
 
-func NewLoginService(userMgmtRepo repository.UserMgmtRepository) *LoginService {
+func NewLoginService(userHelper helper.UserHelper) *LoginService {
 	return &LoginService{
-		userMgmtRepo:       userMgmtRepo,
-		pwdUtil:            util.PasswordUtil{},
-		authTokenIssuer:    config.GetConfigValue("authtoken.issuer"),
-		authTokenAudiences: config.GetConfigValue("authtoken.audience"),
-		authTokenKey:       config.GetConfigValue("authtoken.secret"),
-		authTokenExpire:    config.GetConfigIntValue("authtoken.expire.ms")}
-}
-
-func (svc *LoginService) getLoginData(user *model.UserModel, authMethod string) (*rsdata.LoginData, int, error) {
-	permissions, err := svc.userMgmtRepo.GetPermissions(user.Role.ID)
-	if err != nil {
-		return nil, http.StatusInternalServerError, err
+		UserHelper: userHelper,
 	}
-
-	tokenPayload := &dto.AuthTokenPayload{
-		Username:    user.Username,
-		AuthMethod:  authMethod,
-		RoleType:    user.Role.RoleType,
-		Permissions: permissions,
-	}
-
-	duration := time.Millisecond * time.Duration(int64(svc.authTokenExpire))
-	tokenInfo, err := util.GenerateToken(duration, *tokenPayload, svc.authTokenIssuer, svc.authTokenAudiences, svc.authTokenKey)
-	if err != nil {
-		return nil, http.StatusInternalServerError, err
-	}
-
-	role := &dto.UserPermission{
-		Role:        user.Role.Name,
-		Permissions: permissions,
-	}
-	userInfo := &dto.UserInfo{
-		Fullname:       user.Fullname,
-		Username:       user.Username,
-		IsUserActive:   user.AccountActivated.Bool,
-		UserPermission: *role,
-	}
-	loginData := &rsdata.LoginData{
-		UserInfo:  *userInfo,
-		TokenInfo: *tokenInfo,
-	}
-
-	return loginData, 0, nil
 }
 
 func (svc *LoginService) LoginUserPassword(req login.LoginUserPassRequest) (*rsdata.LoginData, int, error) {
@@ -77,20 +25,13 @@ func (svc *LoginService) LoginUserPassword(req login.LoginUserPassRequest) (*rsd
 		return nil, http.StatusBadRequest, err
 	}
 
-	result, err := svc.userMgmtRepo.GetByUsername(req.Username)
+	result, code, err := svc.FindExistingUser(req, false)
 	if err != nil {
-		return nil, http.StatusInternalServerError, err
-	}
-	if result == nil {
-		return nil, http.StatusNotFound, errors.New(fmt.Sprint("user ", req.Username, " not registered"))
-	}
-
-	if !result.AccountActivated.Valid || !result.AccountActivated.Bool {
-		return nil, http.StatusUnauthorized, errors.New(fmt.Sprint("user ", req.Username, " not yet activated; please check your mail for activation link"))
+		return nil, code, err
 	}
 
 	inputPwd := strings.TrimSpace(req.Password)
-	savedPwd, err := svc.pwdUtil.Decrypt(result.Password)
+	savedPwd, err := svc.GetPwdUtil().Decrypt(result.Password)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
@@ -99,5 +40,5 @@ func (svc *LoginService) LoginUserPassword(req login.LoginUserPassRequest) (*rsd
 		return nil, http.StatusBadRequest, errors.New("invalid password")
 	}
 
-	return svc.getLoginData(result, "password")
+	return svc.GetLoginData(result, "password")
 }
