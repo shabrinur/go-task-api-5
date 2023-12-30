@@ -8,7 +8,8 @@ import (
 
 func SetFileUploadRouter(group *gin.RouterGroup) {
 
-	group.POST("/upload", controller.UploadFile)
-	group.GET("/show/:filename", controller.ShowFile)
-	group.DELETE("/delete/:filename", controller.DeleteFile)
+	ctrl := controller.NewFileUploadController()
+	group.POST("/upload", ctrl.UploadFile)
+	group.GET("/show/:filename", ctrl.ShowFile)
+	group.DELETE("/delete/:filename", ctrl.DeleteFile)
 }

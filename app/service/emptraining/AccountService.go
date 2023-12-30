@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"idstar-idp/rest-api/app/dto/request"
-	"idstar-idp/rest-api/app/dto/response"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	model "idstar-idp/rest-api/app/model/emptraining"
 	repository "idstar-idp/rest-api/app/repository/emptraining"
 	"net/http"
@@ -83,14 +83,14 @@ func (svc *AccountService) GetAccountById(id int) (*model.AccountModel, int, err
 	return result, 0, nil
 }
 
-func (svc *AccountService) GetAccountList(req request.PagingRequest) (*response.PaginationData, int, error) {
+func (svc *AccountService) GetAccountList(req request.PagingRequest) (*rsdata.PaginationData, int, error) {
 	validFields := []string{"id", "nama", "jenis", "rekening", "id_karyawan", "created_date", "updated_date"}
 	err := req.Validate(validFields)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
 	}
 
-	pagedData := response.PaginationData{
+	pagedData := rsdata.PaginationData{
 		Pageable: req.Pageable,
 		Sortable: req.Sortable,
 	}

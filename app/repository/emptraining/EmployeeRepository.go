@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"idstar-idp/rest-api/app/config"
-	"idstar-idp/rest-api/app/dto/response"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	model "idstar-idp/rest-api/app/model/emptraining"
 	"idstar-idp/rest-api/app/util"
 
@@ -72,7 +72,7 @@ func (repo *EmployeeRepository) GetById(id uint) (*model.EmployeeModel, error) {
 	return dbObj, nil
 }
 
-func (repo *EmployeeRepository) GetList(pagedData *response.PaginationData) (*response.PaginationData, error) {
+func (repo *EmployeeRepository) GetList(pagedData *rsdata.PaginationData) (*rsdata.PaginationData, error) {
 	dbObjs := []*model.EmployeeModel{}
 	util.CountRowsAndPages(dbObjs, pagedData, repo.db)
 

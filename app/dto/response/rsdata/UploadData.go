@@ -1,4 +1,4 @@
-package response
+package rsdata
 
 type UploadData struct {
 	FileName        string `json:"fileName"`

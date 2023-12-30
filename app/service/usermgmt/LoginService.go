@@ -6,6 +6,7 @@ import (
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/dto"
 	"idstar-idp/rest-api/app/dto/request/login"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	model "idstar-idp/rest-api/app/model/usermgmt"
 	repository "idstar-idp/rest-api/app/repository/usermgmt"
 	"idstar-idp/rest-api/app/util"
@@ -33,7 +34,7 @@ func NewLoginService(userMgmtRepo repository.UserMgmtRepository) *LoginService {
 		authTokenExpire:    config.GetConfigIntValue("authtoken.expire.ms")}
 }
 
-func (svc *LoginService) getLoginData(user *model.UserModel, authMethod string) (*dto.LoginData, int, error) {
+func (svc *LoginService) getLoginData(user *model.UserModel, authMethod string) (*rsdata.LoginData, int, error) {
 	permissions, err := svc.userMgmtRepo.GetPermissions(user.Role.ID)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err
@@ -56,17 +57,21 @@ func (svc *LoginService) getLoginData(user *model.UserModel, authMethod string) 
 		Role:        user.Role.Name,
 		Permissions: permissions,
 	}
-	loginData := &dto.LoginData{
-		Username:       user.Username,
+	userInfo := &dto.UserInfo{
 		Fullname:       user.Fullname,
-		TokenInfo:      *tokenInfo,
+		Username:       user.Username,
+		IsUserActive:   user.AccountActivated.Bool,
 		UserPermission: *role,
+	}
+	loginData := &rsdata.LoginData{
+		UserInfo:  *userInfo,
+		TokenInfo: *tokenInfo,
 	}
 
 	return loginData, 0, nil
 }
 
-func (svc *LoginService) LoginUserPassword(req login.LoginUserPassRequest) (*dto.LoginData, int, error) {
+func (svc *LoginService) LoginUserPassword(req login.LoginUserPassRequest) (*rsdata.LoginData, int, error) {
 	err := req.Validate(false)
 	if err != nil {
 		return nil, http.StatusBadRequest, err

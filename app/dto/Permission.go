@@ -11,22 +11,16 @@ type UserPermission struct {
 	Permissions []Permission `json:"permissions"`
 }
 
-type OtpBackupData struct {
-	Info  string `json:"info"`
-	Error string `json:"error"`
-	OtpInfo
+type UserInfo struct {
+	Fullname     string `json:"fullname"`
+	Username     string `json:"username"`
+	IsUserActive bool   `json:"isUserActive"`
+	UserPermission
 }
 
 type OtpInfo struct {
-	Otp       string    `json:"otp"`
-	ExpiredOn time.Time `json:"expiredOn"`
-}
-
-type LoginData struct {
-	Username string `json:"username"`
-	Fullname string `json:"fullname"`
-	UserPermission
-	TokenInfo
+	Otp       string    `json:"otp,omitempty"`
+	ExpiredOn time.Time `json:"expiredOn,omitempty"`
 }
 
 type TokenInfo struct {

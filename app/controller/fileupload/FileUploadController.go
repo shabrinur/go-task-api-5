@@ -2,13 +2,26 @@ package controller
 
 import (
 	"errors"
-	"idstar-idp/rest-api/app/dto/response"
+	"idstar-idp/rest-api/app/config"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	"idstar-idp/rest-api/app/util"
 	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
 )
+
+type FileUploadController struct {
+	baseUrl    string
+	uploadPath string
+}
+
+func NewFileUploadController() *FileUploadController {
+	return &FileUploadController{
+		baseUrl:    config.GetConfigValue("app.base.url"),
+		uploadPath: config.GetConfigValue("file.upload.path"),
+	}
+}
 
 // UploadFile godoc
 //
@@ -23,7 +36,7 @@ import (
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
 //	@Router		/v1/file/upload [post]
-func UploadFile(ctx *gin.Context) {
+func (ctrl *FileUploadController) UploadFile(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
 		util.SetErrorResponse(ctx, errors.New("failed to receive file"), http.StatusBadRequest)
@@ -36,15 +49,15 @@ func UploadFile(ctx *gin.Context) {
 		return
 	}
 
-	err = ctx.SaveUploadedFile(file, "/upload/"+savedFileName)
+	err = ctx.SaveUploadedFile(file, ctrl.uploadPath+savedFileName)
 	if err != nil {
 		util.SetErrorResponse(ctx, errors.New("failed to save file"), http.StatusInternalServerError)
 		return
 	}
 
-	uploadData := response.UploadData{
+	uploadData := rsdata.UploadData{
 		FileName:        savedFileName,
-		FileDownloadUri: ctx.Request.Host + "/v1/file/show/" + savedFileName,
+		FileDownloadUri: ctrl.baseUrl + "/v1/file/show/" + savedFileName,
 		FileType:        file.Header.Get("Content-Type"),
 		Size:            file.Size,
 	}
@@ -63,7 +76,7 @@ func UploadFile(ctx *gin.Context) {
 //	@Response	200			{file}		file
 //	@Response	404			{object}	response.ApiResponse
 //	@Router		/v1/file/show/{filename} [get]
-func ShowFile(ctx *gin.Context) {
+func (ctrl *FileUploadController) ShowFile(ctx *gin.Context) {
 	fileName := ctx.Param("filename")
 
 	_, err := util.ValidateFileName(fileName)
@@ -72,7 +85,7 @@ func ShowFile(ctx *gin.Context) {
 		return
 	}
 
-	data, err := os.ReadFile("/upload/" + fileName)
+	data, err := os.ReadFile(ctrl.uploadPath + fileName)
 	if err != nil || len(data) <= 0 {
 		util.SetErrorResponse(ctx, errors.New("failed to find file"), http.StatusNotFound)
 		return
@@ -96,7 +109,7 @@ func ShowFile(ctx *gin.Context) {
 //	@Response	200			{object}	response.ApiResponse
 //	@Response	500			{object}	response.ApiResponse
 //	@Router		/v1/file/delete/{filename} [delete]
-func DeleteFile(ctx *gin.Context) {
+func (ctrl *FileUploadController) DeleteFile(ctx *gin.Context) {
 	fileName := ctx.Param("filename")
 
 	_, err := util.ValidateFileName(fileName)
@@ -105,7 +118,7 @@ func DeleteFile(ctx *gin.Context) {
 		return
 	}
 
-	err = os.Remove("/upload/" + fileName)
+	err = os.Remove(ctrl.uploadPath + fileName)
 	if err != nil {
 		util.SetErrorResponse(ctx, errors.New("failed to remove file"), http.StatusInternalServerError)
 		return

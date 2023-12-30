@@ -20,6 +20,12 @@ func NewUserRepository() *UserRepository {
 	}
 }
 
+func (repo *UserRepository) CheckUserAlreadyExists(username string) bool {
+	var count int64
+	repo.db.Model([]*model.RoleModel{}).Where("username = ?", username).Count(&count)
+	return count > 0
+}
+
 func (repo *UserRepository) Create(dbObj *model.UserModel) (*model.UserModel, error) {
 	result := repo.db.Create(dbObj)
 	if result.Error != nil {
@@ -40,6 +46,14 @@ func (repo *UserRepository) UpdatePassword(dbObj *model.UserModel) (*model.UserM
 	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Update("password", dbObj.Password)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error update password for user: ", dbObj.Username, ", reason: ", result.Error.Error()))
+	}
+	return dbObj, nil
+}
+
+func (repo *UserRepository) ActivateUser(dbObj *model.UserModel) (*model.UserModel, error) {
+	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Update("account_activated", dbObj.AccountActivated)
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error activate user: ", dbObj.Username, ", reason: ", result.Error.Error()))
 	}
 	return dbObj, nil
 }

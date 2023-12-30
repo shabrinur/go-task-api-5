@@ -1,7 +1,7 @@
 package util
 
 import (
-	"idstar-idp/rest-api/app/dto/response"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	"math"
 
 	"gorm.io/gorm"
@@ -13,7 +13,7 @@ func CheckRecordExists(anyModel interface{}, id uint, db *gorm.DB) bool {
 	return count > 0
 }
 
-func CountRowsAndPages(anyModel interface{}, pageable *response.PaginationData, db *gorm.DB) {
+func CountRowsAndPages(anyModel interface{}, pageable *rsdata.PaginationData, db *gorm.DB) {
 	var totalRows int64
 	db.Model(anyModel).Count(&totalRows)
 	pageable.TotalElements = totalRows
@@ -21,7 +21,7 @@ func CountRowsAndPages(anyModel interface{}, pageable *response.PaginationData, 
 	pageable.TotalPages = totalPages
 }
 
-func Paginate(pageable *response.PaginationData, db *gorm.DB) func(db *gorm.DB) *gorm.DB {
+func Paginate(pageable *rsdata.PaginationData, db *gorm.DB) func(db *gorm.DB) *gorm.DB {
 	return func(db *gorm.DB) *gorm.DB {
 		return db.Offset(pageable.GetOffset()).Limit(pageable.GetLimit()).Order(pageable.GetSort())
 	}

@@ -1,4 +1,4 @@
-package response
+package rsdata
 
 import "idstar-idp/rest-api/app/dto"
 

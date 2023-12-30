@@ -21,7 +21,7 @@ func NewLoginController(svc *service.LoginService) *LoginController {
 //
 //	@Summary	Username & Password Login
 //	@Id			UserPassLogin
-//	@Tags		usermanagement
+//	@Tags		user-login
 //	@Accept		json
 //	@Produce	json
 //	@Param		request	body		login.LoginUserPassRequest	true	"Username & Password Login Request"

@@ -17,6 +17,7 @@ type MailUtil struct {
 	username   string
 	password   string
 	senderName string
+	baseUrl    string
 }
 
 func NewMailUtil() *MailUtil {
@@ -26,6 +27,7 @@ func NewMailUtil() *MailUtil {
 		username:   config.GetConfigValue("mail.auth.user"),
 		password:   config.GetConfigValue("mail.auth.password"),
 		senderName: config.GetConfigValue("mail.sender.name"),
+		baseUrl:    config.GetConfigValue("app.base.url"),
 	}
 }
 
@@ -44,10 +46,24 @@ func (c *MailUtil) sendMail(recipientEmail string, recipientName string, mailSub
 	return nil
 }
 
+func (c *MailUtil) SendUserActivationMail(recipientEmail string, recipientName string, otp string, otpExpire time.Time) error {
+	subject := "User Activation - IDP Go REST API"
+	encodedParam := EncodeForActivationLink(recipientEmail, otp)
+	activationLink := c.baseUrl + "/v1/user-register/activate?go=" + encodedParam
+	body := "Dear " + recipientName + ",<br><br><br>" +
+		"You account has been successfully created. To complete registration process, please use this activation link:<br><br>" +
+		activationLink + "<br><br>" +
+		"Or use the code provided below:<br><br>" +
+		"<b>" + otp + "</b><br><br>" +
+		"The link and code are valid until <b>" + otpExpire.Format(otpExpireFormat) + "</b>.<br><br><br>" +
+		"Thanks,<br>Go REST API team"
+	return c.sendMail(recipientEmail, recipientName, subject, body)
+}
+
 func (c *MailUtil) SendChangePasswordMail(recipientEmail string, recipientName string, otp string, otpExpire time.Time) error {
 	subject := "Reset Password - IDP Go REST API"
 	body := "Dear " + recipientName + ",<br><br><br>" +
-		"You recently requested to reset the password for your account. To proceed, please use the provided code below:<br><br>" +
+		"You recently requested to reset the password for your account. To proceed, please use the code provided below:<br><br>" +
 		"<b>" + otp + "</b><br><br>" +
 		"This code is valid until <b>" + otpExpire.Format(otpExpireFormat) + "</b>. If you did not make this request, please ignore this email.<br><br><br>" +
 		"Thanks,<br>Go REST API team"

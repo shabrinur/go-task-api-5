@@ -21,7 +21,7 @@ func NewChangePasswordController(svc *service.ChangePasswordService) *ChangePass
 //
 //	@Summary	Get Change Password Otp
 //	@Id			GetChangePasswordOtp
-//	@Tags		usermanagement
+//	@Tags		forget-password
 //	@Accept		json
 //	@Produce	json
 //	@Param		request	body		login.OtpRequest	true	"Change Password OTP Request"
@@ -51,7 +51,7 @@ func (ctrl *ChangePasswordController) GetChangePasswordOtp(ctx *gin.Context) {
 //
 //	@Summary	Validate Change Password Otp
 //	@Id			ValidateChangePasswordOtp
-//	@Tags		usermanagement
+//	@Tags		forget-password
 //	@Accept		json
 //	@Produce	json
 //	@Param		request	body		login.OtpRequest	true	"Change Password OTP Request"
@@ -81,7 +81,7 @@ func (ctrl *ChangePasswordController) ValidateChangePasswordOtp(ctx *gin.Context
 //
 //	@Summary	Change Password
 //	@Id			ChangePassword
-//	@Tags		usermanagement
+//	@Tags		forget-password
 //	@Accept		json
 //	@Produce	json
 //	@Param		request	body		login.ChangePasswordRequest	true	"Change Password Request"

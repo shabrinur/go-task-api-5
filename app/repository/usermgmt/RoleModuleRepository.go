@@ -1,10 +1,12 @@
 package repository
 
 import (
+	"database/sql"
 	"errors"
 	"fmt"
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/dto"
+	model "idstar-idp/rest-api/app/model/usermgmt"
 
 	"gorm.io/gorm"
 )
@@ -17,6 +19,26 @@ func NewRoleModuleRepository() *RoleModuleRepository {
 	return &RoleModuleRepository{
 		db: config.GetUserMgmtDB(),
 	}
+}
+
+func (repo *RoleModuleRepository) GetDefaultUserRole() (*model.RoleModel, error) {
+	dbObj := &model.RoleModel{}
+	result := repo.db.Where("role_type = ? AND is_default = ?", "user", true).First(&dbObj)
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error find default role, reason: ", result.Error.Error()))
+	}
+	if result.RowsAffected <= 0 {
+		result = repo.db.Where("role_type = ?", "user").First(&dbObj)
+		if result.Error != nil {
+			return nil, errors.New(fmt.Sprint("error find default role, reason: ", result.Error.Error()))
+		}
+		dbObj.IsDefault = sql.NullBool{Valid: true, Bool: true}
+		repo.db.Where("id = ?", dbObj.ID).Updates(dbObj)
+		if result.Error != nil {
+			return nil, errors.New(fmt.Sprint("error find default role, reason: ", result.Error.Error()))
+		}
+	}
+	return dbObj, nil
 }
 
 func (repo *RoleModuleRepository) GetPermissions(roleID uint) ([]dto.Permission, error) {

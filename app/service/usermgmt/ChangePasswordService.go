@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"idstar-idp/rest-api/app/dto"
 	"idstar-idp/rest-api/app/dto/request/login"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	repository "idstar-idp/rest-api/app/repository/usermgmt"
 	"idstar-idp/rest-api/app/util"
 	"net/http"
@@ -46,14 +47,14 @@ func (svc *ChangePasswordService) GetChangePasswordOtp(req login.OtpRequest) (in
 			Otp:       otp,
 			ExpiredOn: otpExpiredOn,
 		}
-		backupResponse := &dto.OtpBackupData{
-			Info:    fmt.Sprint("Request OTP success for user ", req.Username, "; please use the provided OTP for password reset"),
+		backupResponse := &rsdata.OtpBackupData{
+			Info:    fmt.Sprint("Password reset request success for user ", req.Username, "; please use the provided code to proceed"),
 			Error:   err.Error(),
 			OtpInfo: *otpInfo,
 		}
 		return backupResponse, 0, nil
 	}
-	return fmt.Sprint("Request OTP success for user ", req.Username, "; please check your mail for password reset instruction"), 0, nil
+	return fmt.Sprint("Password reset request success for user ", req.Username, "; please check your mail for further instruction"), 0, nil
 }
 
 func (svc *ChangePasswordService) ValidatePasswordOtp(req login.OtpRequest) (int, error) {
