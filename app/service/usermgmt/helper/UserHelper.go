@@ -33,7 +33,7 @@ func NewUserHelper(repo repository.RoleModuleRepository, otpHelper OtpHelper) *U
 		authTokenExpire:    config.GetConfigIntValue("authtoken.expire.ms")}
 }
 
-func (h *UserHelper) SetUserRoleAndPermissions(req login.LoginUserPassRequest) (*model.UserModel, *dto.UserPermission, error) {
+func (h *UserHelper) SetUserRoleAndPermissions(req login.RegistrationLoginRequest) (*model.UserModel, *dto.UserPermission, error) {
 	role, err := h.repo.GetDefaultUserRole()
 	if err != nil {
 		return nil, nil, err
@@ -56,7 +56,7 @@ func (h *UserHelper) SetUserRoleAndPermissions(req login.LoginUserPassRequest) (
 	return user, userPermission, nil
 }
 
-func (h *UserHelper) SendInitialActivationMail(req login.LoginUserPassRequest, userPermission *dto.UserPermission, otp string, otpExpiredOn time.Time) *rsdata.RegistrationData {
+func (h *UserHelper) SendInitialActivationMail(req login.RegistrationLoginRequest, userPermission *dto.UserPermission, otp string, otpExpiredOn time.Time) *rsdata.RegistrationData {
 	info := &rsdata.OtpBackupData{}
 	err := h.GetMailUtil().SendUserActivationMail(req.Username, req.Name, otp, otpExpiredOn)
 	if err != nil {
@@ -84,7 +84,7 @@ func (h *UserHelper) SendInitialActivationMail(req login.LoginUserPassRequest, u
 	return regData
 }
 
-func (h *UserHelper) FindExistingUser(req login.LoginUserPassRequest, isOauth bool) (*model.UserModel, int, error) {
+func (h *UserHelper) FindExistingUser(req login.RegistrationLoginRequest, isOauth bool) (*model.UserModel, int, error) {
 	result, err := h.userRepo.GetByUsername(req.Username)
 	if err != nil {
 		return nil, http.StatusInternalServerError, err

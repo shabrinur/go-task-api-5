@@ -14,4 +14,5 @@ func SetLoginRouter(group *gin.RouterGroup, userHelper helper.UserHelper) {
 	ctrl := controller.NewLoginController(svc)
 
 	group.POST("/login", ctrl.UserPassLogin)
+	group.GET("/oauth/:provider", ctrl.OauthLogin)
 }

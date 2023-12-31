@@ -14,13 +14,15 @@ type UserModel struct {
 	DeletedDate             gorm.DeletedAt `json:"deleted_date" gorm:"softDelete:true"`
 	Fullname                string         `json:"fullname"`
 	Username                string         `json:"username" gorm:"type:varchar(100);required;unique;not null"`
-	Password                string         `json:"-"`
+	Oauth                   sql.NullBool   `json:"oauth" gorm:"default:false"`
+	OauthProvider           string         `json:"oauthProvider,omitempty" gorm:"type:varchar(50)"`
+	Password                string         `json:"-" gorm:"type:varchar(100)"`
+	AccessToken             string         `json:"-"`
+	AccessTokenExpiredDate  time.Time      `json:"accessTokenExpiredDate,omitempty"`
+	RefreshToken            string         `json:"-"`
+	RefreshTokenExpiredDate time.Time      `json:"refreshTokenExpiredDate,omitempty"`
 	Otp                     string         `json:"otp" gorm:"type:varchar(10);required;not null"`
 	OtpExpiredDate          time.Time      `json:"otpExpiredDate" gorm:"required;not null"`
-	AccessToken             string         `json:"accessToken,omitempty"`
-	AccessTokenExpiredDate  time.Time      `json:"accessTokenExpiredDate,omitempty"`
-	RefreshToken            string         `json:"refreshToken,omitempty"`
-	RefreshTokenExpiredDate time.Time      `json:"refreshTokenExpiredDate,omitempty"`
 	AccountActivated        sql.NullBool   `json:"accountActivated" gorm:"default:false"`
 	IDRole                  uint           `json:"-"`
 	Role                    RoleModel      `json:"-" gorm:"foreignKey:IDRole;constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`

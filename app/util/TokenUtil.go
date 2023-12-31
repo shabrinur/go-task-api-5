@@ -53,7 +53,7 @@ func ValidateToken(tokenString string, jwtKey string) (*dto.AuthTokenPayload, er
 
 	tokenPayload, ok := token.Claims.(*dto.AuthTokenPayload)
 	if !ok || !token.Valid {
-		return tokenPayload, errors.New("token invalid; re-login to generate new token")
+		return nil, errors.New("token no longer valid")
 	}
 
 	return tokenPayload, nil

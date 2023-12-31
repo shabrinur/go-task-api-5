@@ -50,6 +50,33 @@ func (repo *UserRepository) UpdatePassword(dbObj *model.UserModel) (*model.UserM
 	return dbObj, nil
 }
 
+func (repo *UserRepository) EnableOauthLogin(dbObj *model.UserModel) (*model.UserModel, error) {
+	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Updates(model.UserModel{
+		Fullname:                dbObj.Fullname,
+		Oauth:                   dbObj.Oauth,
+		OauthProvider:           dbObj.OauthProvider,
+		AccessToken:             dbObj.AccessToken,
+		AccessTokenExpiredDate:  dbObj.AccessTokenExpiredDate,
+		RefreshToken:            dbObj.RefreshToken,
+		RefreshTokenExpiredDate: dbObj.RefreshTokenExpiredDate})
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error update oauth info for user: ", dbObj.Username, ", reason: ", result.Error.Error()))
+	}
+	return dbObj, nil
+}
+
+func (repo *UserRepository) UpdateOauthInfo(dbObj *model.UserModel) (*model.UserModel, error) {
+	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Updates(model.UserModel{
+		AccessToken:             dbObj.AccessToken,
+		AccessTokenExpiredDate:  dbObj.AccessTokenExpiredDate,
+		RefreshToken:            dbObj.RefreshToken,
+		RefreshTokenExpiredDate: dbObj.RefreshTokenExpiredDate})
+	if result.Error != nil {
+		return nil, errors.New(fmt.Sprint("error update oauth info for user: ", dbObj.Username, ", reason: ", result.Error.Error()))
+	}
+	return dbObj, nil
+}
+
 func (repo *UserRepository) ActivateUser(dbObj *model.UserModel) (*model.UserModel, error) {
 	result := repo.db.Model(&model.UserModel{}).Where("username = ?", dbObj.Username).Update("account_activated", dbObj.AccountActivated)
 	if result.Error != nil {

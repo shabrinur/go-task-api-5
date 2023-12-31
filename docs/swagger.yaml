@@ -1,21 +1,32 @@
 definitions:
-  dto.Pageable:
+  login.ChangePasswordRequest:
     properties:
-      offset:
-        type: integer
-      page:
-        type: integer
-      size:
-        type: integer
+      confirmPassword:
+        type: string
+      newPassword:
+        maxLength: 16
+        minLength: 8
+        type: string
+      otp:
+        type: string
+      username:
+        type: string
+    required:
+    - confirmPassword
+    - newPassword
+    - otp
+    - username
     type: object
-  dto.Sortable:
+  login.OtpRequest:
     properties:
-      direction:
+      otp:
         type: string
-      field:
+      username:
         type: string
+    required:
+    - username
     type: object
-  login.LoginUserPassRequest:
+  login.RegistrationLoginRequest:
     properties:
       name:
         type: string
@@ -118,28 +129,15 @@ definitions:
       message:
         type: string
     type: object
-  response.PaginationData:
-    properties:
-      content: {}
-      emptyPage:
-        type: boolean
-      firstPage:
-        type: boolean
-      lastPage:
-        type: boolean
-      numberOfElements:
-        type: integer
-      pageable:
-        $ref: '#/definitions/dto.Pageable'
-      sortable:
-        $ref: '#/definitions/dto.Sortable'
-      totalElements:
-        type: integer
-      totalPages:
-        type: integer
-    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
 info:
   contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
 paths:
   /v1/file/delete/{filename}:
     delete:
@@ -226,6 +224,96 @@ paths:
       summary: Upload File
       tags:
       - file
+  /v1/forget-password/change-password:
+    post:
+      consumes:
+      - application/json
+      operationId: ChangePassword
+      parameters:
+      - description: Change Password Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.ChangePasswordRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Change Password
+      tags:
+      - forget-password
+  /v1/forget-password/send-otp:
+    post:
+      consumes:
+      - application/json
+      operationId: GetChangePasswordOtp
+      parameters:
+      - description: Change Password OTP Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.OtpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Change Password Otp
+      tags:
+      - forget-password
+  /v1/forget-password/validate-otp:
+    post:
+      consumes:
+      - application/json
+      operationId: ValidateChangePasswordOtp
+      parameters:
+      - description: Change Password OTP Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.OtpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Validate Change Password Otp
+      tags:
+      - forget-password
   /v1/idstar/karyawan-training/{id}:
     get:
       consumes:
@@ -321,7 +409,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.PaginationData'
+            $ref: '#/definitions/response.ApiResponse'
         "400":
           description: Bad Request
           schema:
@@ -498,7 +586,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.PaginationData'
+            $ref: '#/definitions/response.ApiResponse'
         "400":
           description: Bad Request
           schema:
@@ -675,7 +763,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.PaginationData'
+            $ref: '#/definitions/response.ApiResponse'
         "400":
           description: Bad Request
           schema:
@@ -852,7 +940,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/response.PaginationData'
+            $ref: '#/definitions/response.ApiResponse'
         "400":
           description: Bad Request
           schema:
@@ -934,18 +1022,18 @@ paths:
       summary: Update Training
       tags:
       - training
-  /v1/user-login/login:
+  /v1/registration:
     post:
       consumes:
       - application/json
-      operationId: Login
+      operationId: RegisterUser
       parameters:
-      - description: Login Request
+      - description: Register User Request
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/login.LoginUserPassRequest'
+          $ref: '#/definitions/login.RegistrationLoginRequest'
       produces:
       - application/json
       responses:
@@ -961,7 +1049,165 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/response.ApiResponse'
-      summary: Login
+      summary: Register User
       tags:
-      - usermanagement
+      - registration
+  /v1/registration/activate:
+    get:
+      consumes:
+      - application/json
+      operationId: ActivateByLink
+      parameters:
+      - description: Activation Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.OtpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Activate By Link
+      tags:
+      - registration
+    post:
+      consumes:
+      - application/json
+      operationId: ActivateByCode
+      parameters:
+      - description: Activation Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.OtpRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Activate By Code
+      tags:
+      - registration
+  /v1/registration/send-link:
+    post:
+      consumes:
+      - application/json
+      operationId: GetActivationLink
+      parameters:
+      - description: Encoded Activation Parameter
+        in: query
+        name: go
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Get Activation Link
+      tags:
+      - registration
+  /v1/user-login/login:
+    post:
+      consumes:
+      - application/json
+      operationId: UserPassLogin
+      parameters:
+      - description: Username & Password Login Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/login.RegistrationLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Username & Password Login
+      tags:
+      - user-login
+  /v1/user-login/oauth/{provider}:
+    get:
+      consumes:
+      - application/json
+      description: 'Note: This is only for documentation purpose. Execute the API
+        call from web browser for testing.'
+      operationId: OauthLogin
+      parameters:
+      - description: Oauth Provider
+        in: path
+        name: provider
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "302":
+          description: Found
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ApiResponse'
+      summary: Oauth Login
+      tags:
+      - user-login
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

@@ -25,13 +25,13 @@ func NewRegistrationController(svc *service.RegistrationService) *RegistrationCo
 //	@Tags		registration
 //	@Accept		json
 //	@Produce	json
-//	@Param		request	body		login.LoginUserPassRequest	true	"Register User Request"
+//	@Param		request	body		login.RegistrationLoginRequest	true	"Register User Request"
 //	@Response	200		{object}	response.ApiResponse
 //	@Response	400		{object}	response.ApiResponse
 //	@Response	500		{object}	response.ApiResponse
 //	@Router		/v1/registration [post]
 func (ctrl *RegistrationController) RegisterUser(ctx *gin.Context) {
-	req := login.LoginUserPassRequest{}
+	req := login.RegistrationLoginRequest{}
 
 	err := ctx.ShouldBindJSON(&req)
 	if err != nil {

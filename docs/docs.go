@@ -9,7 +9,12 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
+        "termsOfService": "http://swagger.io/terms/",
         "contact": {},
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
@@ -150,6 +155,144 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/forget-password/change-password": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "forget-password"
+                ],
+                "summary": "Change Password",
+                "operationId": "ChangePassword",
+                "parameters": [
+                    {
+                        "description": "Change Password Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.ChangePasswordRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/forget-password/send-otp": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "forget-password"
+                ],
+                "summary": "Get Change Password Otp",
+                "operationId": "GetChangePasswordOtp",
+                "parameters": [
+                    {
+                        "description": "Change Password OTP Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.OtpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/forget-password/validate-otp": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "forget-password"
+                ],
+                "summary": "Validate Change Password Otp",
+                "operationId": "ValidateChangePasswordOtp",
+                "parameters": [
+                    {
+                        "description": "Change Password OTP Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.OtpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/v1/idstar/karyawan-training/delete": {
             "delete": {
                 "security": [
@@ -249,7 +392,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.PaginationData"
+                            "$ref": "#/definitions/response.ApiResponse"
                         }
                     },
                     "400": {
@@ -529,7 +672,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.PaginationData"
+                            "$ref": "#/definitions/response.ApiResponse"
                         }
                     },
                     "400": {
@@ -809,7 +952,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.PaginationData"
+                            "$ref": "#/definitions/response.ApiResponse"
                         }
                     },
                     "400": {
@@ -1089,7 +1232,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.PaginationData"
+                            "$ref": "#/definitions/response.ApiResponse"
                         }
                     },
                     "400": {
@@ -1270,7 +1413,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user-login/login": {
+        "/v1/registration": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -1279,18 +1422,18 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "usermanagement"
+                    "registration"
                 ],
-                "summary": "Login",
-                "operationId": "Login",
+                "summary": "Register User",
+                "operationId": "RegisterUser",
                 "parameters": [
                     {
-                        "description": "Login Request",
+                        "description": "Register User Request",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/login.LoginUserPassRequest"
+                            "$ref": "#/definitions/login.RegistrationLoginRequest"
                         }
                     }
                 ],
@@ -1315,35 +1458,280 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/registration/activate": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "registration"
+                ],
+                "summary": "Activate By Link",
+                "operationId": "ActivateByLink",
+                "parameters": [
+                    {
+                        "description": "Activation Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.OtpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "registration"
+                ],
+                "summary": "Activate By Code",
+                "operationId": "ActivateByCode",
+                "parameters": [
+                    {
+                        "description": "Activation Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.OtpRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/registration/send-link": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "registration"
+                ],
+                "summary": "Get Activation Link",
+                "operationId": "GetActivationLink",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Encoded Activation Parameter",
+                        "name": "go",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user-login/login": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-login"
+                ],
+                "summary": "Username \u0026 Password Login",
+                "operationId": "UserPassLogin",
+                "parameters": [
+                    {
+                        "description": "Username \u0026 Password Login Request",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/login.RegistrationLoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user-login/oauth/{provider}": {
+            "get": {
+                "description": "Note: This is only for documentation purpose. Execute the API call from web browser for testing.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user-login"
+                ],
+                "summary": "Oauth Login",
+                "operationId": "OauthLogin",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Oauth Provider",
+                        "name": "provider",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "302": {
+                        "description": "Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ApiResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "dto.Pageable": {
+        "login.ChangePasswordRequest": {
             "type": "object",
+            "required": [
+                "confirmPassword",
+                "newPassword",
+                "otp",
+                "username"
+            ],
             "properties": {
-                "offset": {
-                    "type": "integer"
+                "confirmPassword": {
+                    "type": "string"
                 },
-                "page": {
-                    "type": "integer"
+                "newPassword": {
+                    "type": "string",
+                    "maxLength": 16,
+                    "minLength": 8
                 },
-                "size": {
-                    "type": "integer"
+                "otp": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
                 }
             }
         },
-        "dto.Sortable": {
+        "login.OtpRequest": {
             "type": "object",
+            "required": [
+                "username"
+            ],
             "properties": {
-                "direction": {
+                "otp": {
                     "type": "string"
                 },
-                "field": {
+                "username": {
                     "type": "string"
                 }
             }
         },
-        "login.LoginUserPassRequest": {
+        "login.RegistrationLoginRequest": {
             "type": "object",
             "required": [
                 "password",
@@ -1495,37 +1883,18 @@ const docTemplate = `{
                     "type": "string"
                 }
             }
-        },
-        "response.PaginationData": {
-            "type": "object",
-            "properties": {
-                "content": {},
-                "emptyPage": {
-                    "type": "boolean"
-                },
-                "firstPage": {
-                    "type": "boolean"
-                },
-                "lastPage": {
-                    "type": "boolean"
-                },
-                "numberOfElements": {
-                    "type": "integer"
-                },
-                "pageable": {
-                    "$ref": "#/definitions/dto.Pageable"
-                },
-                "sortable": {
-                    "$ref": "#/definitions/dto.Sortable"
-                },
-                "totalElements": {
-                    "type": "integer"
-                },
-                "totalPages": {
-                    "type": "integer"
-                }
-            }
         }
+    },
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "externalDocs": {
+        "description": "OpenAPI",
+        "url": "https://swagger.io/resources/open-api/"
     }
 }`
 

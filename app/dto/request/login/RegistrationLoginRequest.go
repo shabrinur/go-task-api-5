@@ -6,13 +6,13 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-type LoginUserPassRequest struct {
+type RegistrationLoginRequest struct {
 	Name     string `json:"name,omitempty"`
 	Username string `json:"username" validate:"required,email"`
 	Password string `json:"password" validate:"required,min=8,max=16"`
 }
 
-func (c *LoginUserPassRequest) Validate(isRegistration bool) error {
+func (c *RegistrationLoginRequest) Validate(isRegistration bool) error {
 	if isRegistration {
 		if c.Name == "" {
 			return errors.New("'Name' is required on register")

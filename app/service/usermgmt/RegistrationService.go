@@ -22,7 +22,7 @@ func NewRegistrationService(userHelper helper.UserHelper) *RegistrationService {
 	}
 }
 
-func (svc *RegistrationService) RegisterUser(req login.LoginUserPassRequest) (*rsdata.RegistrationData, int, error) {
+func (svc *RegistrationService) RegisterUser(req login.RegistrationLoginRequest) (*rsdata.RegistrationData, int, error) {
 	err := req.Validate(true)
 	if err != nil {
 		return nil, http.StatusBadRequest, err
