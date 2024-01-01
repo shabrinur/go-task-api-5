@@ -7,7 +7,7 @@ import (
 )
 
 func LoadConfigFile() {
-	viper.SetConfigName("config")
+	viper.SetConfigName("config-railway")
 	viper.SetConfigType("properties")
 	viper.AddConfigPath("./")
 	err := viper.ReadInConfig()
