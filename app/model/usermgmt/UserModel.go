@@ -29,5 +29,5 @@ type UserModel struct {
 }
 
 func (c *UserModel) TableName() string {
-	return "usermanagement.oauth_user"
+	return "oauth_user"
 }

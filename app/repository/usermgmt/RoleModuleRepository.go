@@ -44,9 +44,12 @@ func (repo *RoleModuleRepository) GetDefaultUserRole() (*model.RoleModel, error)
 func (repo *RoleModuleRepository) GetPermissions(roleID uint) ([]dto.Permission, error) {
 	permissions := []dto.Permission{}
 
-	result := repo.db.Table("usermanagement.role_module").
+	roleModule := &model.RoleModuleModel{}
+	module := &model.ModuleModel{}
+
+	result := repo.db.Table(roleModule.TableName()).
 		Select("app_module.path, role_module.get_allowed, role_module.put_allowed, role_module.post_allowed, role_module.delete_allowed").
-		Joins("left join usermanagement.app_module on app_module.id = role_module.id_module").Where("role_module.id_role = ?", roleID).Scan(&permissions)
+		Joins("left join "+module.TableName()+" on app_module.id = role_module.id_module").Where("role_module.id_role = ?", roleID).Scan(&permissions)
 	if result.Error != nil {
 		return nil, errors.New(fmt.Sprint("error get user permissions, reason: ", result.Error.Error()))
 	}

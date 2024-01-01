@@ -18,5 +18,5 @@ type RoleModel struct {
 }
 
 func (c *RoleModel) TableName() string {
-	return "usermanagement.oauth_role"
+	return "oauth_role"
 }

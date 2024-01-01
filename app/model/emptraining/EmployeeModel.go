@@ -20,7 +20,7 @@ type EmployeeModel struct {
 }
 
 func (c *EmployeeModel) TableName() string {
-	return "training.karyawan"
+	return "karyawan"
 }
 
 type AccountEmployeeModel struct {
@@ -29,5 +29,5 @@ type AccountEmployeeModel struct {
 }
 
 func (c *AccountEmployeeModel) TableName() string {
-	return "training.karyawan"
+	return "karyawan"
 }

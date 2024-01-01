@@ -18,5 +18,5 @@ type ModuleModel struct {
 }
 
 func (c *ModuleModel) TableName() string {
-	return "usermanagement.app_module"
+	return "app_module"
 }

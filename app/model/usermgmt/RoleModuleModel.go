@@ -23,5 +23,5 @@ type RoleModuleModel struct {
 }
 
 func (c *RoleModuleModel) TableName() string {
-	return "usermanagement.role_module"
+	return "role_module"
 }
