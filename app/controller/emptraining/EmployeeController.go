@@ -20,17 +20,18 @@ func NewEmployeeController(svc *service.EmployeeService) *EmployeeController {
 
 // CreateEmployee godoc
 //
-//	@Summary	Create Karyawan
-//	@Id			CreateEmployee
-//	@Tags		karyawan
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.EmployeeRequest	true	"Create Karyawan Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan/save [post]
+//	@Summary		Create Karyawan
+//	@Description	To authorize this API, get token from user-login
+//	@Id				CreateEmployee
+//	@Tags			idstar/karyawan
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.EmployeeRequest	true	"Create Karyawan Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan/save [post]
 func (ctrl *EmployeeController) CreateEmployee(ctx *gin.Context) {
 	req := request.EmployeeRequest{}
 
@@ -51,18 +52,19 @@ func (ctrl *EmployeeController) CreateEmployee(ctx *gin.Context) {
 
 // UpdateEmployee godoc
 //
-//	@Summary	Update Karyawan
-//	@Id			UpdateEmployee
-//	@Tags		karyawan
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.EmployeeRequest	true	"Update Karyawan Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	404		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan/update [put]
+//	@Summary		Update Karyawan
+//	@Description	To authorize this API, get token from user-login
+//	@Id				UpdateEmployee
+//	@Tags			idstar/karyawan
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.EmployeeRequest	true	"Update Karyawan Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		404		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan/update [put]
 func (ctrl *EmployeeController) UpdateEmployee(ctx *gin.Context) {
 	req := request.EmployeeRequest{}
 
@@ -83,18 +85,19 @@ func (ctrl *EmployeeController) UpdateEmployee(ctx *gin.Context) {
 
 // GetEmployeeById godoc
 //
-//	@Summary	Get Karyawan By Id
-//	@Id			GetEmployeeById
-//	@Tags		karyawan
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		id	path		int	true	"Karyawan ID"
-//	@Response	200	{object}	response.ApiResponse
-//	@Response	400	{object}	response.ApiResponse
-//	@Response	404	{object}	response.ApiResponse
-//	@Response	500	{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan/{id} [get]
+//	@Summary		Get Karyawan By Id
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetEmployeeById
+//	@Tags			idstar/karyawan
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			id	path		int	true	"Karyawan ID"
+//	@Response		200	{object}	response.ApiResponse
+//	@Response		400	{object}	response.ApiResponse
+//	@Response		404	{object}	response.ApiResponse
+//	@Response		500	{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan/{id} [get]
 func (ctrl *EmployeeController) GetEmployeeById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -113,20 +116,21 @@ func (ctrl *EmployeeController) GetEmployeeById(ctx *gin.Context) {
 
 // GetEmployeeList godoc
 //
-//	@Summary	Get Karyawan List
-//	@Id			GetEmployeeList
-//	@Tags		karyawan
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		page		query		int		false	"Page"
-//	@Param		size		query		int		false	"Size"
-//	@Param		field		query		string	false	"Field"
-//	@Param		direction	query		string	false	"Direction"
-//	@Response	200			{object}	response.ApiResponse
-//	@Response	400			{object}	response.ApiResponse
-//	@Response	500			{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan/list [get]
+//	@Summary		Get Karyawan List
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetEmployeeList
+//	@Tags			idstar/karyawan
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			page		query		int		false	"Page"
+//	@Param			size		query		int		false	"Size"
+//	@Param			field		query		string	false	"Field"
+//	@Param			direction	query		string	false	"Direction"
+//	@Response		200			{object}	response.ApiResponse
+//	@Response		400			{object}	response.ApiResponse
+//	@Response		500			{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan/list [get]
 func (ctrl *EmployeeController) GetEmployeeList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -147,17 +151,18 @@ func (ctrl *EmployeeController) GetEmployeeList(ctx *gin.Context) {
 
 // DeleteEmployee godoc
 //
-//	@Summary	Delete Karyawan
-//	@Id			DeleteEmployee
-//	@Tags		karyawan
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.IdRequest	true	"Delete Karyawan Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan/delete [delete]
+//	@Summary		Delete Karyawan
+//	@Description	To authorize this API, get token from user-login
+//	@Id				DeleteEmployee
+//	@Tags			idstar/karyawan
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.IdRequest	true	"Delete Karyawan Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan/delete [delete]
 func (ctrl *EmployeeController) DeleteEmployee(ctx *gin.Context) {
 	req := request.IdRequest{}
 

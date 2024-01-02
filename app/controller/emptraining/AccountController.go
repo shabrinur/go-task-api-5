@@ -20,17 +20,18 @@ func NewAccountController(svc *service.AccountService) *AccountController {
 
 // CreateAccount godoc
 //
-//	@Summary	Create Rekening
-//	@Id			CreateAccount
-//	@Tags		rekening
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.AccountRequest	true	"Create Rekening Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/rekening/save [post]
+//	@Summary		Create Rekening
+//	@Description	To authorize this API, get token from user-login
+//	@Id				CreateAccount
+//	@Tags			idstar/rekening
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.AccountRequest	true	"Create Rekening Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/rekening/save [post]
 func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 	req := request.AccountRequest{}
 
@@ -51,18 +52,19 @@ func (ctrl *AccountController) CreateAccount(ctx *gin.Context) {
 
 // UpdateAccount godoc
 //
-//	@Summary	Update Rekening
-//	@Id			UpdateAccount
-//	@Tags		rekening
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.AccountRequest	true	"Update Rekening Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	404		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/rekening/update [put]
+//	@Summary		Update Rekening
+//	@Description	To authorize this API, get token from user-login
+//	@Id				UpdateAccount
+//	@Tags			idstar/rekening
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.AccountRequest	true	"Update Rekening Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		404		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/rekening/update [put]
 func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 	req := request.AccountRequest{}
 
@@ -83,18 +85,19 @@ func (ctrl *AccountController) UpdateAccount(ctx *gin.Context) {
 
 // GetAccountById godoc
 //
-//	@Summary	Get Rekening By Id
-//	@Id			GetAccountById
-//	@Tags		rekening
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		id	path		int	true	"Rekening ID"
-//	@Response	200	{object}	response.ApiResponse
-//	@Response	400	{object}	response.ApiResponse
-//	@Response	404	{object}	response.ApiResponse
-//	@Response	500	{object}	response.ApiResponse
-//	@Router		/v1/idstar/rekening/{id} [get]
+//	@Summary		Get Rekening By Id
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetAccountById
+//	@Tags			idstar/rekening
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			id	path		int	true	"Rekening ID"
+//	@Response		200	{object}	response.ApiResponse
+//	@Response		400	{object}	response.ApiResponse
+//	@Response		404	{object}	response.ApiResponse
+//	@Response		500	{object}	response.ApiResponse
+//	@Router			/v1/idstar/rekening/{id} [get]
 func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -113,20 +116,21 @@ func (ctrl *AccountController) GetAccountById(ctx *gin.Context) {
 
 // GetAccountList godoc
 //
-//	@Summary	Get Rekening List
-//	@Id			GetAccountList
-//	@Tags		rekening
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		page		query		int		false	"Page"
-//	@Param		size		query		int		false	"Size"
-//	@Param		field		query		string	false	"Field"
-//	@Param		direction	query		string	false	"Direction"
-//	@Response	200			{object}	response.ApiResponse
-//	@Response	400			{object}	response.ApiResponse
-//	@Response	500			{object}	response.ApiResponse
-//	@Router		/v1/idstar/rekening/list [get]
+//	@Summary		Get Rekening List
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetAccountList
+//	@Tags			idstar/rekening
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			page		query		int		false	"Page"
+//	@Param			size		query		int		false	"Size"
+//	@Param			field		query		string	false	"Field"
+//	@Param			direction	query		string	false	"Direction"
+//	@Response		200			{object}	response.ApiResponse
+//	@Response		400			{object}	response.ApiResponse
+//	@Response		500			{object}	response.ApiResponse
+//	@Router			/v1/idstar/rekening/list [get]
 func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -147,17 +151,18 @@ func (ctrl *AccountController) GetAccountList(ctx *gin.Context) {
 
 // DeleteAccount godoc
 //
-//	@Summary	Delete Rekening
-//	@Id			DeleteAccount
-//	@Tags		rekening
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.IdRequest	true	"Delete Rekening Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/rekening/delete [delete]
+//	@Summary		Delete Rekening
+//	@Description	To authorize this API, get token from user-login
+//	@Id				DeleteAccount
+//	@Tags			idstar/rekening
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.IdRequest	true	"Delete Rekening Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/rekening/delete [delete]
 func (ctrl *AccountController) DeleteAccount(ctx *gin.Context) {
 	req := request.IdRequest{}
 

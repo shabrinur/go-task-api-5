@@ -5,8 +5,10 @@ import (
 	"idstar-idp/rest-api/app/config"
 	"idstar-idp/rest-api/app/dto/response/rsdata"
 	"idstar-idp/rest-api/app/util"
+	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,17 +27,18 @@ func NewFileUploadController() *FileUploadController {
 
 // UploadFile godoc
 //
-//	@Summary	Upload File
-//	@Id			UploadFile
-//	@Tags		file
-//	@Accept		*/*
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		file	formData	file	true	"File Upload Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/file/upload [post]
+//	@Summary		Upload File
+//	@Description	To authorize this API, get token from user-login
+//	@Id				UploadFile
+//	@Tags			file
+//	@Accept			*/*
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			file	formData	file	true	"File Upload Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/file/upload [post]
 func (ctrl *FileUploadController) UploadFile(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
@@ -49,7 +52,9 @@ func (ctrl *FileUploadController) UploadFile(ctx *gin.Context) {
 		return
 	}
 
-	err = ctx.SaveUploadedFile(file, ctrl.uploadPath+savedFileName)
+	destination := ctrl.uploadPath + savedFileName
+	log.Printf("uploading file to %s", filepath.Dir(destination))
+	err = ctx.SaveUploadedFile(file, destination)
 	if err != nil {
 		util.SetErrorResponse(ctx, errors.New("failed to save file"), http.StatusInternalServerError)
 		return
@@ -66,16 +71,17 @@ func (ctrl *FileUploadController) UploadFile(ctx *gin.Context) {
 
 // ShowFile godoc
 //
-//	@Summary	Show Uploaded File
-//	@Id			ShowFile
-//	@Tags		file
-//	@Accept		json
-//	@Produce	*/*
-//	@Security	ApiKeyAuth
-//	@Param		filename	path		string	true	"File Name"
-//	@Response	200			{file}		file
-//	@Response	404			{object}	response.ApiResponse
-//	@Router		/v1/file/show/{filename} [get]
+//	@Summary		Show Uploaded File
+//	@Description	To authorize this API, get token from user-login
+//	@Id				ShowFile
+//	@Tags			file
+//	@Accept			json
+//	@Produce		*/*
+//	@Security		BearerTokenAuth
+//	@Param			filename	path		string	true	"File Name"
+//	@Response		200			{file}		file
+//	@Response		404			{object}	response.ApiResponse
+//	@Router			/v1/file/show/{filename} [get]
 func (ctrl *FileUploadController) ShowFile(ctx *gin.Context) {
 	fileName := ctx.Param("filename")
 
@@ -99,16 +105,17 @@ func (ctrl *FileUploadController) ShowFile(ctx *gin.Context) {
 
 // DeleteFile godoc
 //
-//	@Summary	Delete Uploaded File
-//	@Id			DeleteFile
-//	@Tags		file
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		filename	path		string	true	"File Name"
-//	@Response	200			{object}	response.ApiResponse
-//	@Response	500			{object}	response.ApiResponse
-//	@Router		/v1/file/delete/{filename} [delete]
+//	@Summary		Delete Uploaded File
+//	@Description	To authorize this API, get token from user-login
+//	@Id				DeleteFile
+//	@Tags			file
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			filename	path		string	true	"File Name"
+//	@Response		200			{object}	response.ApiResponse
+//	@Response		500			{object}	response.ApiResponse
+//	@Router			/v1/file/delete/{filename} [delete]
 func (ctrl *FileUploadController) DeleteFile(ctx *gin.Context) {
 	fileName := ctx.Param("filename")
 

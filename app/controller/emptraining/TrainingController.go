@@ -20,17 +20,18 @@ func NewTrainingController(svc *service.TrainingService) *TrainingController {
 
 // CreateTraining godoc
 //
-//	@Summary	Create Training
-//	@Id			CreateTraining
-//	@Tags		training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.TrainingRequest	true	"Create Training Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/training/save [post]
+//	@Summary		Create Training
+//	@Description	To authorize this API, get token from user-login
+//	@Id				CreateTraining
+//	@Tags			idstar/training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.TrainingRequest	true	"Create Training Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/training/save [post]
 func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 	req := request.TrainingRequest{}
 
@@ -51,18 +52,19 @@ func (ctrl *TrainingController) CreateTraining(ctx *gin.Context) {
 
 // UpdateTraining godoc
 //
-//	@Summary	Update Training
-//	@Id			UpdateTraining
-//	@Tags		training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.TrainingRequest	true	"Update Training Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	404		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/training/update [put]
+//	@Summary		Update Training
+//	@Description	To authorize this API, get token from user-login
+//	@Id				UpdateTraining
+//	@Tags			idstar/training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.TrainingRequest	true	"Update Training Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		404		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/training/update [put]
 func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 	req := request.TrainingRequest{}
 
@@ -83,18 +85,19 @@ func (ctrl *TrainingController) UpdateTraining(ctx *gin.Context) {
 
 // GetTrainingById godoc
 //
-//	@Summary	Get Training By Id
-//	@Id			GetTrainingById
-//	@Tags		training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		id	path		int	true	"Training ID"
-//	@Response	200	{object}	response.ApiResponse
-//	@Response	400	{object}	response.ApiResponse
-//	@Response	404	{object}	response.ApiResponse
-//	@Response	500	{object}	response.ApiResponse
-//	@Router		/v1/idstar/training/{id} [get]
+//	@Summary		Get Training By Id
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetTrainingById
+//	@Tags			idstar/training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			id	path		int	true	"Training ID"
+//	@Response		200	{object}	response.ApiResponse
+//	@Response		400	{object}	response.ApiResponse
+//	@Response		404	{object}	response.ApiResponse
+//	@Response		500	{object}	response.ApiResponse
+//	@Router			/v1/idstar/training/{id} [get]
 func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -113,20 +116,21 @@ func (ctrl *TrainingController) GetTrainingById(ctx *gin.Context) {
 
 // GetTrainingList godoc
 //
-//	@Summary	Get Training List
-//	@Id			GetTrainingList
-//	@Tags		training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		page		query		int		false	"Page"
-//	@Param		size		query		int		false	"Size"
-//	@Param		field		query		string	false	"Field"
-//	@Param		direction	query		string	false	"Direction"
-//	@Response	200			{object}	response.ApiResponse
-//	@Response	400			{object}	response.ApiResponse
-//	@Response	500			{object}	response.ApiResponse
-//	@Router		/v1/idstar/training/list [get]
+//	@Summary		Get Training List
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetTrainingList
+//	@Tags			idstar/training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			page		query		int		false	"Page"
+//	@Param			size		query		int		false	"Size"
+//	@Param			field		query		string	false	"Field"
+//	@Param			direction	query		string	false	"Direction"
+//	@Response		200			{object}	response.ApiResponse
+//	@Response		400			{object}	response.ApiResponse
+//	@Response		500			{object}	response.ApiResponse
+//	@Router			/v1/idstar/training/list [get]
 func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -147,17 +151,18 @@ func (ctrl *TrainingController) GetTrainingList(ctx *gin.Context) {
 
 // DeleteTraining godoc
 //
-//	@Summary	Delete Training
-//	@Id			DeleteTraining
-//	@Tags		training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.IdRequest	true	"Delete Training Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/training/delete [delete]
+//	@Summary		Delete Training
+//	@Description	To authorize this API, get token from user-login
+//	@Id				DeleteTraining
+//	@Tags			idstar/training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.IdRequest	true	"Delete Training Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/training/delete [delete]
 func (ctrl *TrainingController) DeleteTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 

@@ -50,16 +50,16 @@ func (ctrl *LoginController) UserPassLogin(ctx *gin.Context) {
 // OauthLogin godoc
 //
 //	@Summary		Oauth Login
-//	@Description	Note: This is only for documentation purpose. Execute the API call from web browser for testing.
+//	@Description	This API contains redirect and produces text/html. It is preferable to execute the API call from web browser for testing.
 //	@Id				OauthLogin
 //	@Tags			user-login
 //	@Accept			json
-//	@Produce		json
+//	@Produce		text/html
 //	@Param			provider	path		string	true	"Oauth Provider"
-//	@Response		302			{object}	response.ApiResponse
-//	@Response		200			{object}	response.ApiResponse
-//	@Response		400			{object}	response.ApiResponse
-//	@Response		500			{object}	response.ApiResponse
+//	@Response		200			{string}	string	"text/html"
+//	@Response		302			{string}	string	"text/html"
+//	@Response		400			{string}	string	"text/html"
+//	@Response		500			{string}	string	"text/html"
 //	@Router			/v1/user-login/oauth/{provider} [get]
 func (ctrl *LoginController) OauthLogin(ctx *gin.Context) {
 	oauthProvider := ctx.Param("provider")
@@ -72,7 +72,7 @@ func (ctrl *LoginController) OauthLogin(ctx *gin.Context) {
 	queryMap := ctx.Request.URL.Query()
 	if len(queryMap) == 0 {
 		authAddress := ctrl.svc.GetProviderAuthAddress(oauthProvider)
-		log.Printf("accessing %s oauth at %s", oauthProvider, authAddress)
+		log.Printf("accessing %s oauth address at %s", oauthProvider, authAddress)
 		ctx.Redirect(http.StatusFound, authAddress)
 		return
 	}

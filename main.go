@@ -25,7 +25,15 @@ var once sync.Once
 // @license.url				http://www.apache.org/licenses/LICENSE-2.0.html
 // @externalDocs.description	OpenAPI
 // @externalDocs.url			https://swagger.io/resources/open-api/
-// @securityDefinitions.apikey	ApiKeyAuth
+// @tag.name					registration
+// @tag.name					user-login
+// @tag.name					forget-password
+// @tag.name					idstar/karyawan
+// @tag.name					idstar/rekening
+// @tag.name					idstar/training
+// @tag.name					idstar/karyawan-training
+// @tag.name					file
+// @securityDefinitions.apikey	BearerTokenAuth
 // @in							header
 // @name						Authorization
 func main() {

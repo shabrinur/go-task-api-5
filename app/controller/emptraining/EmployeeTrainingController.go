@@ -20,17 +20,18 @@ func NewEmployeeTrainingController(svc *service.EmployeeTrainingService) *Employ
 
 // CreateEmployeeTraining godoc
 //
-//	@Summary	Create Karyawan Training
-//	@Id			CreateEmployeeTraining
-//	@Tags		karyawan-training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.EmployeeTrainingRequest	true	"Create Karyawan Training Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan-training/save [post]
+//	@Summary		Create Karyawan Training
+//	@Description	To authorize this API, get token from user-login
+//	@Id				CreateEmployeeTraining
+//	@Tags			idstar/karyawan-training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.EmployeeTrainingRequest	true	"Create Karyawan Training Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan-training/save [post]
 func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context) {
 	req := request.EmployeeTrainingRequest{}
 
@@ -51,18 +52,19 @@ func (ctrl *EmployeeTrainingController) CreateEmployeeTraining(ctx *gin.Context)
 
 // UpdateEmployeeTraining godoc
 //
-//	@Summary	Update Karyawan Training
-//	@Id			UpdateEmployeeTraining
-//	@Tags		karyawan-training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.EmployeeTrainingRequest	true	"Update Karyawan Training Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	404		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan-training/update [put]
+//	@Summary		Update Karyawan Training
+//	@Description	To authorize this API, get token from user-login
+//	@Id				UpdateEmployeeTraining
+//	@Tags			idstar/karyawan-training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.EmployeeTrainingRequest	true	"Update Karyawan Training Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		404		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan-training/update [put]
 func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context) {
 	req := request.EmployeeTrainingRequest{}
 
@@ -83,18 +85,19 @@ func (ctrl *EmployeeTrainingController) UpdateEmployeeTraining(ctx *gin.Context)
 
 // GetEmployeeTrainingById godoc
 //
-//	@Summary	Get Karyawan Training By Id
-//	@Id			GetEmployeeTrainingById
-//	@Tags		karyawan-training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		id	path		int	true	"Training ID"
-//	@Response	200	{object}	response.ApiResponse
-//	@Response	400	{object}	response.ApiResponse
-//	@Response	404	{object}	response.ApiResponse
-//	@Response	500	{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan-training/{id} [get]
+//	@Summary		Get Karyawan Training By Id
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetEmployeeTrainingById
+//	@Tags			idstar/karyawan-training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			id	path		int	true	"Training ID"
+//	@Response		200	{object}	response.ApiResponse
+//	@Response		400	{object}	response.ApiResponse
+//	@Response		404	{object}	response.ApiResponse
+//	@Response		500	{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan-training/{id} [get]
 func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
@@ -113,20 +116,21 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingById(ctx *gin.Context
 
 // GetEmployeeTrainingList godoc
 //
-//	@Summary	Get Karyawan Training List
-//	@Id			GetEmployeeTrainingList
-//	@Tags		karyawan-training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		page		query		int		false	"Page"
-//	@Param		size		query		int		false	"Size"
-//	@Param		field		query		string	false	"Field"
-//	@Param		direction	query		string	false	"Direction"
-//	@Response	200			{object}	response.ApiResponse
-//	@Response	400			{object}	response.ApiResponse
-//	@Response	500			{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan-training/list [get]
+//	@Summary		Get Karyawan Training List
+//	@Description	To authorize this API, get token from user-login
+//	@Id				GetEmployeeTrainingList
+//	@Tags			idstar/karyawan-training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			page		query		int		false	"Page"
+//	@Param			size		query		int		false	"Size"
+//	@Param			field		query		string	false	"Field"
+//	@Param			direction	query		string	false	"Direction"
+//	@Response		200			{object}	response.ApiResponse
+//	@Response		400			{object}	response.ApiResponse
+//	@Response		500			{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan-training/list [get]
 func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context) {
 	req := request.PagingRequest{}
 
@@ -147,17 +151,18 @@ func (ctrl *EmployeeTrainingController) GetEmployeeTrainingList(ctx *gin.Context
 
 // DeleteEmployeeTraining godoc
 //
-//	@Summary	Delete Karyawan Training
-//	@Id			DeleteEmployeeTraining
-//	@Tags		karyawan-training
-//	@Accept		json
-//	@Produce	json
-//	@Security	ApiKeyAuth
-//	@Param		request	body		request.IdRequest	true	"Delete Karyawan Training Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/idstar/karyawan-training/delete [delete]
+//	@Summary		Delete Karyawan Training
+//	@Description	To authorize this API, get token from user-login
+//	@Id				DeleteEmployeeTraining
+//	@Tags			idstar/karyawan-training
+//	@Accept			json
+//	@Produce		json
+//	@Security		BearerTokenAuth
+//	@Param			request	body		request.IdRequest	true	"Delete Karyawan Training Request"
+//	@Response		200		{object}	response.ApiResponse
+//	@Response		400		{object}	response.ApiResponse
+//	@Response		500		{object}	response.ApiResponse
+//	@Router			/v1/idstar/karyawan-training/delete [delete]
 func (ctrl *EmployeeTrainingController) DeleteEmployeeTraining(ctx *gin.Context) {
 	req := request.IdRequest{}
 

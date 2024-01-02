@@ -77,6 +77,35 @@ func (ctrl *RegistrationController) GetActivationLink(ctx *gin.Context) {
 	util.SetSuccessResponse(ctx, result)
 }
 
+// ActivateByLink godoc
+//
+//	@Summary		Activate By Link
+//	@Description	This API produces text/html. It is preferable to execute the API call from web browser for testing.
+//	@Id				ActivateByLink
+//	@Tags			registration
+//	@Accept			json
+//	@Produce		text/html
+//	@Param			go	query		string	true	"Encoded Activation Request"
+//	@Response		200	{string}	string	"text/html"
+//	@Response		400	{string}	string	"text/html"
+//	@Response		500	{string}	string	"text/html"
+//	@Router			/v1/registration/activate [get]
+func (ctrl *RegistrationController) ActivateByLink(ctx *gin.Context) {
+	encodedString := ctx.Query("go")
+	if encodedString == "" {
+		util.SetErrorResponse(ctx, errors.New("activation code missing"), http.StatusBadRequest)
+		return
+	}
+
+	msg, code, err := ctrl.svc.ActivateByLink(encodedString)
+	if err != nil {
+		util.SetErrorResponse(ctx, err, code)
+		return
+	}
+
+	util.SetSuccessResponse(ctx, msg)
+}
+
 // ActivateByCode godoc
 //
 //	@Summary	Activate By Code
@@ -99,34 +128,6 @@ func (ctrl *RegistrationController) ActivateByCode(ctx *gin.Context) {
 	}
 
 	msg, code, err := ctrl.svc.ActivateByCode(req)
-	if err != nil {
-		util.SetErrorResponse(ctx, err, code)
-		return
-	}
-
-	util.SetSuccessResponse(ctx, msg)
-}
-
-// ActivateByLink godoc
-//
-//	@Summary	Activate By Link
-//	@Id			ActivateByLink
-//	@Tags		registration
-//	@Accept		json
-//	@Produce	json
-//	@Param		request	body		login.OtpRequest	true	"Activation Request"
-//	@Response	200		{object}	response.ApiResponse
-//	@Response	400		{object}	response.ApiResponse
-//	@Response	500		{object}	response.ApiResponse
-//	@Router		/v1/registration/activate [get]
-func (ctrl *RegistrationController) ActivateByLink(ctx *gin.Context) {
-	encodedString := ctx.Query("go")
-	if encodedString == "" {
-		util.SetErrorResponse(ctx, errors.New("activation code missing"), http.StatusBadRequest)
-		return
-	}
-
-	msg, code, err := ctrl.svc.ActivateByLink(encodedString)
 	if err != nil {
 		util.SetErrorResponse(ctx, err, code)
 		return
