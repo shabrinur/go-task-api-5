@@ -71,7 +71,7 @@ func (svc *RegistrationService) GetActivationLink(req login.OtpRequest) (interfa
 	if err != nil {
 		otpInfo := &dto.OtpInfo{
 			Otp:       otp,
-			ExpiredOn: otpExpiredOn,
+			ExpiredOn: &otpExpiredOn,
 		}
 		backupResponse := &rsdata.OtpBackupData{
 			Info:    fmt.Sprint("Activation code request success for user ", user.Username, "; please use the provided code to proceed"),
@@ -103,7 +103,7 @@ func (svc *RegistrationService) activateUser(username string, otp string) (strin
 	if err != nil {
 		return "", http.StatusInternalServerError, err
 	}
-	return fmt.Sprint("Congratulation, ", username, " is now active! Please proceed to login"), 0, nil
+	return fmt.Sprint("Congratulation, user ", username, " is now active! Please proceed to login"), 0, nil
 }
 
 func (svc *RegistrationService) ActivateByCode(req login.OtpRequest) (string, int, error) {

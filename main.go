@@ -12,6 +12,7 @@ import (
 	"idstar-idp/rest-api/app/util"
 	"sync"
 
+	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
 
 	swaggerFiles "github.com/swaggo/files"
@@ -47,6 +48,9 @@ func main() {
 
 	r := gin.Default()
 
+	// load static assets
+	r.Static("/assets", "./assets")
+
 	// declare middleware
 	logger := middleware.LoggerMiddleware{}
 	auth := middleware.NewAuthMiddleware()
@@ -58,6 +62,8 @@ func main() {
 	initFileRouting(r, *auth)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	r.HTMLRender = renderResponseViews()
 
 	r.Run()
 }
@@ -137,4 +143,18 @@ func initFileRouting(r *gin.Engine, auth middleware.AuthMiddleware) {
 	{
 		fileUpload.SetFileUploadRouter(file)
 	}
+}
+
+func renderResponseViews() multitemplate.Renderer {
+	render := multitemplate.NewRenderer()
+
+	layoutPath := "app/view/template/layout.tmpl"
+	viewPath := "app/view"
+
+	render.AddFromFiles("error", layoutPath, viewPath+"/error.html")
+	render.AddFromFiles("registration", layoutPath, viewPath+"/registration.html")
+	render.AddFromFiles("activation", layoutPath, viewPath+"/activation.html")
+	render.AddFromFiles("login", layoutPath, viewPath+"/login.html")
+
+	return render
 }

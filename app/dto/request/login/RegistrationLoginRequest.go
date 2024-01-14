@@ -1,24 +1,20 @@
 package login
 
 import (
-	"errors"
-
 	"github.com/go-playground/validator/v10"
 )
 
 type RegistrationLoginRequest struct {
-	Name     string `json:"name,omitempty"`
-	Username string `json:"username" validate:"required,email"`
-	Password string `json:"password" validate:"required,min=8,max=16"`
+	Name            string `json:"name,omitempty" validate:"required"`
+	Username        string `json:"username" validate:"required,email"`
+	Password        string `json:"password" validate:"required,min=8,max=16"`
+	ConfirmPassword string `json:"confirmPassword" validate:"required,eqfield=Password"`
 }
 
 func (c *RegistrationLoginRequest) Validate(isRegistration bool) error {
-	if isRegistration {
-		if c.Name == "" {
-			return errors.New("'Name' is required on register")
-		}
-	} else {
+	if !isRegistration {
 		c.Name = "dummy"
+		c.ConfirmPassword = c.Password
 	}
 
 	validate := validator.New()

@@ -8,7 +8,7 @@ type ChangePasswordRequest struct {
 	Username        string `json:"username" validate:"required,email"`
 	Otp             string `json:"otp" validate:"required,alphanum"`
 	NewPassword     string `json:"newPassword" validate:"required,min=8,max=16"`
-	ConfirmPassword string `json:"confirmPassword" validate:"required,eqfield=ConfirmPassword"`
+	ConfirmPassword string `json:"confirmPassword" validate:"required,eqfield=NewPassword"`
 }
 
 func (c *ChangePasswordRequest) Validate() error {

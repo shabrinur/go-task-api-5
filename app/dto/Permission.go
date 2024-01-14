@@ -19,8 +19,8 @@ type UserInfo struct {
 }
 
 type OtpInfo struct {
-	Otp       string    `json:"otp,omitempty"`
-	ExpiredOn time.Time `json:"expiredOn,omitempty"`
+	Otp       string     `json:"otp,omitempty"`
+	ExpiredOn *time.Time `json:"expiredOn,omitempty"`
 }
 
 type TokenInfo struct {

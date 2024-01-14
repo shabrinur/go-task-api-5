@@ -39,7 +39,7 @@ func (svc *ChangePasswordService) GetChangePasswordOtp(req login.OtpRequest) (in
 	if err != nil {
 		otpInfo := &dto.OtpInfo{
 			Otp:       otp,
-			ExpiredOn: otpExpiredOn,
+			ExpiredOn: &otpExpiredOn,
 		}
 		backupResponse := &rsdata.OtpBackupData{
 			Info:    fmt.Sprint("Password reset request success for user ", req.Username, "; please use the provided code to proceed"),

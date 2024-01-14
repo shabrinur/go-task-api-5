@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"idstar-idp/rest-api/app/dto/response"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	"mime/multipart"
 	"net/http"
 	"net/url"
@@ -85,4 +86,44 @@ func SetSuccessResponse(ctx *gin.Context, data any) {
 		Message: "Success",
 		Data:    data,
 	})
+}
+
+func ShowErrorResponsePage(ctx *gin.Context, err error, code int) {
+	info := gin.H{
+		"title":   fmt.Sprint("HTTP Error - ", code),
+		"header":  "An Error Has Occured! Sorry :(",
+		"message": err.Error(),
+		"year":    time.Now().Year(),
+	}
+	ctx.HTML(code, "error", info)
+}
+
+func ShowRegistrationResponsePage(ctx *gin.Context, data *rsdata.RegistrationData) {
+	info := gin.H{
+		"title":  "User Registration",
+		"header": "Your Account Has Been Created :)",
+		"data":   data,
+		"year":   time.Now().Year(),
+	}
+	ctx.HTML(http.StatusOK, "registration", info)
+}
+
+func ShowActivationResponsePage(ctx *gin.Context, msg string) {
+	info := gin.H{
+		"title":   "User Activation",
+		"header":  "You're Good To Go :)",
+		"message": msg,
+		"year":    time.Now().Year(),
+	}
+	ctx.HTML(http.StatusOK, "activation", info)
+}
+
+func ShowLoginResponsePage(ctx *gin.Context, data *rsdata.LoginData) {
+	info := gin.H{
+		"title":  "User Login",
+		"header": "Welcome! Here's Your Login Info :)",
+		"data":   data,
+		"year":   time.Now().Year(),
+	}
+	ctx.HTML(http.StatusOK, "login", info)
 }

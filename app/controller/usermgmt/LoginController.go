@@ -2,6 +2,7 @@ package controller
 
 import (
 	"idstar-idp/rest-api/app/dto/request/login"
+	"idstar-idp/rest-api/app/dto/response/rsdata"
 	service "idstar-idp/rest-api/app/service/usermgmt"
 	"idstar-idp/rest-api/app/util"
 	"log"
@@ -65,7 +66,7 @@ func (ctrl *LoginController) OauthLogin(ctx *gin.Context) {
 	oauthProvider := ctx.Param("provider")
 	err := ctrl.svc.ValidateOauthProvider(oauthProvider)
 	if err != nil {
-		util.SetErrorResponse(ctx, err, http.StatusBadRequest)
+		util.ShowErrorResponsePage(ctx, err, http.StatusBadRequest)
 		return
 	}
 
@@ -79,8 +80,13 @@ func (ctrl *LoginController) OauthLogin(ctx *gin.Context) {
 
 	result, code, err := ctrl.svc.OauthLogin(oauthProvider, queryMap)
 	if err != nil {
-		util.SetErrorResponse(ctx, err, code)
+		util.ShowErrorResponsePage(ctx, err, code)
 		return
 	}
-	util.SetSuccessResponse(ctx, result)
+	data, ok := result.(*rsdata.LoginData)
+	if !ok {
+		util.ShowRegistrationResponsePage(ctx, result.(*rsdata.RegistrationData))
+		return
+	}
+	util.ShowLoginResponsePage(ctx, data)
 }

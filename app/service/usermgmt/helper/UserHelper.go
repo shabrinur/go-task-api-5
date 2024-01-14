@@ -62,7 +62,7 @@ func (h *UserHelper) SendInitialActivationMail(req login.RegistrationLoginReques
 	if err != nil {
 		otpInfo := &dto.OtpInfo{
 			Otp:       otp,
-			ExpiredOn: otpExpiredOn,
+			ExpiredOn: &otpExpiredOn,
 		}
 		info.Info = fmt.Sprint("Reqistration success for user ", req.Username, "; please use the provided code for activation")
 		info.OtpInfo = *otpInfo

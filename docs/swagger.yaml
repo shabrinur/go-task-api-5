@@ -28,6 +28,8 @@ definitions:
     type: object
   login.RegistrationLoginRequest:
     properties:
+      confirmPassword:
+        type: string
       name:
         type: string
       password:
@@ -37,6 +39,8 @@ definitions:
       username:
         type: string
     required:
+    - confirmPassword
+    - name
     - password
     - username
     type: object
@@ -143,6 +147,7 @@ paths:
     delete:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: DeleteFile
       parameters:
       - description: File Name
@@ -162,7 +167,7 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Delete Uploaded File
       tags:
       - file
@@ -170,6 +175,7 @@ paths:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: ShowFile
       parameters:
       - description: File Name
@@ -189,7 +195,7 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Show Uploaded File
       tags:
       - file
@@ -197,6 +203,7 @@ paths:
     post:
       consumes:
       - '*/*'
+      description: To authorize this API, get token from user-login
       operationId: UploadFile
       parameters:
       - description: File Upload Request
@@ -220,7 +227,7 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Upload File
       tags:
       - file
@@ -318,6 +325,7 @@ paths:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetEmployeeTrainingById
       parameters:
       - description: Training ID
@@ -345,14 +353,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Karyawan Training By Id
       tags:
-      - karyawan-training
+      - idstar/karyawan-training
   /v1/idstar/karyawan-training/delete:
     delete:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: DeleteEmployeeTraining
       parameters:
       - description: Delete Karyawan Training Request
@@ -377,14 +386,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Delete Karyawan Training
       tags:
-      - karyawan-training
+      - idstar/karyawan-training
   /v1/idstar/karyawan-training/list:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetEmployeeTrainingList
       parameters:
       - description: Page
@@ -419,14 +429,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Karyawan Training List
       tags:
-      - karyawan-training
+      - idstar/karyawan-training
   /v1/idstar/karyawan-training/save:
     post:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: CreateEmployeeTraining
       parameters:
       - description: Create Karyawan Training Request
@@ -451,14 +462,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Create Karyawan Training
       tags:
-      - karyawan-training
+      - idstar/karyawan-training
   /v1/idstar/karyawan-training/update:
     put:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: UpdateEmployeeTraining
       parameters:
       - description: Update Karyawan Training Request
@@ -487,14 +499,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Update Karyawan Training
       tags:
-      - karyawan-training
+      - idstar/karyawan-training
   /v1/idstar/karyawan/{id}:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetEmployeeById
       parameters:
       - description: Karyawan ID
@@ -522,14 +535,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Karyawan By Id
       tags:
-      - karyawan
+      - idstar/karyawan
   /v1/idstar/karyawan/delete:
     delete:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: DeleteEmployee
       parameters:
       - description: Delete Karyawan Request
@@ -554,14 +568,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Delete Karyawan
       tags:
-      - karyawan
+      - idstar/karyawan
   /v1/idstar/karyawan/list:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetEmployeeList
       parameters:
       - description: Page
@@ -596,14 +611,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Karyawan List
       tags:
-      - karyawan
+      - idstar/karyawan
   /v1/idstar/karyawan/save:
     post:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: CreateEmployee
       parameters:
       - description: Create Karyawan Request
@@ -628,14 +644,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Create Karyawan
       tags:
-      - karyawan
+      - idstar/karyawan
   /v1/idstar/karyawan/update:
     put:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: UpdateEmployee
       parameters:
       - description: Update Karyawan Request
@@ -664,14 +681,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Update Karyawan
       tags:
-      - karyawan
+      - idstar/karyawan
   /v1/idstar/rekening/{id}:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetAccountById
       parameters:
       - description: Rekening ID
@@ -699,14 +717,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Rekening By Id
       tags:
-      - rekening
+      - idstar/rekening
   /v1/idstar/rekening/delete:
     delete:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: DeleteAccount
       parameters:
       - description: Delete Rekening Request
@@ -731,14 +750,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Delete Rekening
       tags:
-      - rekening
+      - idstar/rekening
   /v1/idstar/rekening/list:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetAccountList
       parameters:
       - description: Page
@@ -773,14 +793,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Rekening List
       tags:
-      - rekening
+      - idstar/rekening
   /v1/idstar/rekening/save:
     post:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: CreateAccount
       parameters:
       - description: Create Rekening Request
@@ -805,14 +826,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Create Rekening
       tags:
-      - rekening
+      - idstar/rekening
   /v1/idstar/rekening/update:
     put:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: UpdateAccount
       parameters:
       - description: Update Rekening Request
@@ -841,14 +863,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Update Rekening
       tags:
-      - rekening
+      - idstar/rekening
   /v1/idstar/training/{id}:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetTrainingById
       parameters:
       - description: Training ID
@@ -876,14 +899,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Training By Id
       tags:
-      - training
+      - idstar/training
   /v1/idstar/training/delete:
     delete:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: DeleteTraining
       parameters:
       - description: Delete Training Request
@@ -908,14 +932,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Delete Training
       tags:
-      - training
+      - idstar/training
   /v1/idstar/training/list:
     get:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: GetTrainingList
       parameters:
       - description: Page
@@ -950,14 +975,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Get Training List
       tags:
-      - training
+      - idstar/training
   /v1/idstar/training/save:
     post:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: CreateTraining
       parameters:
       - description: Create Training Request
@@ -982,14 +1008,15 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Create Training
       tags:
-      - training
+      - idstar/training
   /v1/idstar/training/update:
     put:
       consumes:
       - application/json
+      description: To authorize this API, get token from user-login
       operationId: UpdateTraining
       parameters:
       - description: Update Training Request
@@ -1018,10 +1045,10 @@ paths:
           schema:
             $ref: '#/definitions/response.ApiResponse'
       security:
-      - ApiKeyAuth: []
+      - BearerTokenAuth: []
       summary: Update Training
       tags:
-      - training
+      - idstar/training
   /v1/registration:
     post:
       consumes:
@@ -1056,29 +1083,30 @@ paths:
     get:
       consumes:
       - application/json
+      description: This API produces text/html. It is preferable to execute the API
+        call from web browser for testing.
       operationId: ActivateByLink
       parameters:
-      - description: Activation Request
-        in: body
-        name: request
+      - description: Encoded Activation Request
+        in: query
+        name: go
         required: true
-        schema:
-          $ref: '#/definitions/login.OtpRequest'
+        type: string
       produces:
-      - application/json
+      - text/html
       responses:
         "200":
-          description: OK
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
         "400":
-          description: Bad Request
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
         "500":
-          description: Internal Server Error
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
       summary: Activate By Link
       tags:
       - registration
@@ -1174,8 +1202,8 @@ paths:
     get:
       consumes:
       - application/json
-      description: 'Note: This is only for documentation purpose. Execute the API
-        call from web browser for testing.'
+      description: This API contains redirect and produces text/html. It is preferable
+        to execute the API call from web browser for testing.
       operationId: OauthLogin
       parameters:
       - description: Oauth Provider
@@ -1184,30 +1212,39 @@ paths:
         required: true
         type: string
       produces:
-      - application/json
+      - text/html
       responses:
         "200":
-          description: OK
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
         "302":
-          description: Found
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
         "400":
-          description: Bad Request
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
         "500":
-          description: Internal Server Error
+          description: text/html
           schema:
-            $ref: '#/definitions/response.ApiResponse'
+            type: string
       summary: Oauth Login
       tags:
       - user-login
 securityDefinitions:
-  ApiKeyAuth:
+  BearerTokenAuth:
     in: header
     name: Authorization
     type: apiKey
 swagger: "2.0"
+tags:
+- name: registration
+- name: user-login
+- name: forget-password
+- name: idstar/karyawan
+- name: idstar/rekening
+- name: idstar/training
+- name: idstar/karyawan-training
+- name: file

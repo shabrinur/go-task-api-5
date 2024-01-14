@@ -24,9 +24,10 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -67,9 +68,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -110,9 +112,10 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "*/*"
                 ],
@@ -297,9 +300,10 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -307,7 +311,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan-training"
+                    "idstar/karyawan-training"
                 ],
                 "summary": "Delete Karyawan Training",
                 "operationId": "DeleteEmployeeTraining",
@@ -348,9 +352,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -358,7 +363,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan-training"
+                    "idstar/karyawan-training"
                 ],
                 "summary": "Get Karyawan Training List",
                 "operationId": "GetEmployeeTrainingList",
@@ -414,9 +419,10 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -424,7 +430,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan-training"
+                    "idstar/karyawan-training"
                 ],
                 "summary": "Create Karyawan Training",
                 "operationId": "CreateEmployeeTraining",
@@ -465,9 +471,10 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -475,7 +482,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan-training"
+                    "idstar/karyawan-training"
                 ],
                 "summary": "Update Karyawan Training",
                 "operationId": "UpdateEmployeeTraining",
@@ -522,9 +529,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -532,7 +540,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan-training"
+                    "idstar/karyawan-training"
                 ],
                 "summary": "Get Karyawan Training By Id",
                 "operationId": "GetEmployeeTrainingById",
@@ -577,9 +585,10 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -587,7 +596,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan"
+                    "idstar/karyawan"
                 ],
                 "summary": "Delete Karyawan",
                 "operationId": "DeleteEmployee",
@@ -628,9 +637,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -638,7 +648,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan"
+                    "idstar/karyawan"
                 ],
                 "summary": "Get Karyawan List",
                 "operationId": "GetEmployeeList",
@@ -694,9 +704,10 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -704,7 +715,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan"
+                    "idstar/karyawan"
                 ],
                 "summary": "Create Karyawan",
                 "operationId": "CreateEmployee",
@@ -745,9 +756,10 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -755,7 +767,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan"
+                    "idstar/karyawan"
                 ],
                 "summary": "Update Karyawan",
                 "operationId": "UpdateEmployee",
@@ -802,9 +814,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -812,7 +825,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "karyawan"
+                    "idstar/karyawan"
                 ],
                 "summary": "Get Karyawan By Id",
                 "operationId": "GetEmployeeById",
@@ -857,9 +870,10 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -867,7 +881,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "rekening"
+                    "idstar/rekening"
                 ],
                 "summary": "Delete Rekening",
                 "operationId": "DeleteAccount",
@@ -908,9 +922,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -918,7 +933,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "rekening"
+                    "idstar/rekening"
                 ],
                 "summary": "Get Rekening List",
                 "operationId": "GetAccountList",
@@ -974,9 +989,10 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -984,7 +1000,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "rekening"
+                    "idstar/rekening"
                 ],
                 "summary": "Create Rekening",
                 "operationId": "CreateAccount",
@@ -1025,9 +1041,10 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1035,7 +1052,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "rekening"
+                    "idstar/rekening"
                 ],
                 "summary": "Update Rekening",
                 "operationId": "UpdateAccount",
@@ -1082,9 +1099,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1092,7 +1110,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "rekening"
+                    "idstar/rekening"
                 ],
                 "summary": "Get Rekening By Id",
                 "operationId": "GetAccountById",
@@ -1137,9 +1155,10 @@ const docTemplate = `{
             "delete": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1147,7 +1166,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "training"
+                    "idstar/training"
                 ],
                 "summary": "Delete Training",
                 "operationId": "DeleteTraining",
@@ -1188,9 +1207,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1198,7 +1218,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "training"
+                    "idstar/training"
                 ],
                 "summary": "Get Training List",
                 "operationId": "GetTrainingList",
@@ -1254,9 +1274,10 @@ const docTemplate = `{
             "post": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1264,7 +1285,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "training"
+                    "idstar/training"
                 ],
                 "summary": "Create Training",
                 "operationId": "CreateTraining",
@@ -1305,9 +1326,10 @@ const docTemplate = `{
             "put": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1315,7 +1337,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "training"
+                    "idstar/training"
                 ],
                 "summary": "Update Training",
                 "operationId": "UpdateTraining",
@@ -1362,9 +1384,10 @@ const docTemplate = `{
             "get": {
                 "security": [
                     {
-                        "ApiKeyAuth": []
+                        "BearerTokenAuth": []
                     }
                 ],
+                "description": "To authorize this API, get token from user-login",
                 "consumes": [
                     "application/json"
                 ],
@@ -1372,7 +1395,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "training"
+                    "idstar/training"
                 ],
                 "summary": "Get Training By Id",
                 "operationId": "GetTrainingById",
@@ -1461,11 +1484,12 @@ const docTemplate = `{
         },
         "/v1/registration/activate": {
             "get": {
+                "description": "This API produces text/html. It is preferable to execute the API call from web browser for testing.",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "text/html"
                 ],
                 "tags": [
                     "registration"
@@ -1474,32 +1498,30 @@ const docTemplate = `{
                 "operationId": "ActivateByLink",
                 "parameters": [
                     {
-                        "description": "Activation Request",
-                        "name": "request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/login.OtpRequest"
-                        }
+                        "type": "string",
+                        "description": "Encoded Activation Request",
+                        "name": "go",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     }
                 }
@@ -1641,12 +1663,12 @@ const docTemplate = `{
         },
         "/v1/user-login/oauth/{provider}": {
             "get": {
-                "description": "Note: This is only for documentation purpose. Execute the API call from web browser for testing.",
+                "description": "This API contains redirect and produces text/html. It is preferable to execute the API call from web browser for testing.",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
-                    "application/json"
+                    "text/html"
                 ],
                 "tags": [
                     "user-login"
@@ -1664,27 +1686,27 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     },
                     "302": {
-                        "description": "Found",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     },
                     "400": {
-                        "description": "Bad Request",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     },
                     "500": {
-                        "description": "Internal Server Error",
+                        "description": "text/html",
                         "schema": {
-                            "$ref": "#/definitions/response.ApiResponse"
+                            "type": "string"
                         }
                     }
                 }
@@ -1734,10 +1756,15 @@ const docTemplate = `{
         "login.RegistrationLoginRequest": {
             "type": "object",
             "required": [
+                "confirmPassword",
+                "name",
                 "password",
                 "username"
             ],
             "properties": {
+                "confirmPassword": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -1886,12 +1913,38 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "ApiKeyAuth": {
+        "BearerTokenAuth": {
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
         }
     },
+    "tags": [
+        {
+            "name": "registration"
+        },
+        {
+            "name": "user-login"
+        },
+        {
+            "name": "forget-password"
+        },
+        {
+            "name": "idstar/karyawan"
+        },
+        {
+            "name": "idstar/rekening"
+        },
+        {
+            "name": "idstar/training"
+        },
+        {
+            "name": "idstar/karyawan-training"
+        },
+        {
+            "name": "file"
+        }
+    ],
     "externalDocs": {
         "description": "OpenAPI",
         "url": "https://swagger.io/resources/open-api/"

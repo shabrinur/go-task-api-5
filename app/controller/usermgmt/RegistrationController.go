@@ -93,17 +93,17 @@ func (ctrl *RegistrationController) GetActivationLink(ctx *gin.Context) {
 func (ctrl *RegistrationController) ActivateByLink(ctx *gin.Context) {
 	encodedString := ctx.Query("go")
 	if encodedString == "" {
-		util.SetErrorResponse(ctx, errors.New("activation code missing"), http.StatusBadRequest)
+		util.ShowErrorResponsePage(ctx, errors.New("activation code missing"), http.StatusBadRequest)
 		return
 	}
 
 	msg, code, err := ctrl.svc.ActivateByLink(encodedString)
 	if err != nil {
-		util.SetErrorResponse(ctx, err, code)
+		util.ShowErrorResponsePage(ctx, err, code)
 		return
 	}
 
-	util.SetSuccessResponse(ctx, msg)
+	util.ShowActivationResponsePage(ctx, msg)
 }
 
 // ActivateByCode godoc
