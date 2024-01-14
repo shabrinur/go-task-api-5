@@ -1,19 +1,13 @@
-# Assignment: Training Karyawan REST API
-
+# Assignment: Go REST API
 Personal repository for basic Go REST API assignment.
 
-## Database Configuration
+## Configuration
+Configuration for this project can be found in file **/config-*.properties**. To set which configuration file to load, modify this line in **/app/config/Configuration.go**:
 
-This application uses **PostgreSQL**. Database connection can be configured in file **/config.properties**.
+    viper.SetConfigName("set configuration file name here")
 
-|Properties | Description |
-| - | - |
-|`postgres.training.host` | Database host |
-|`postgres.training.port` | Database port |
-|`postgres.training.dbName` | Database name |
-|`postgres.training.user` | Database user |
-|`postgres.training.password` | Database password |
+Project requires **PostgreSQL** to run.
 
 ## Documentation
 
-Swagger UI for this application can be accessed from http://localhost:8080/swagger/index.html. Documentation for API requests & responses can be found under **/docs**.
+Swagger UI for this application can be accessed from path [/swagger/index.html](#). Documentation for API requests & responses can be found under **/docs**.
