@@ -1,0 +1,1440 @@
+{
+	"info": {
+		"_postman_id": "df9df652-260a-4c49-b653-89f57d0906aa",
+		"name": "[localhost] IDP - Go REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registration",
+			"item": [
+				{
+					"name": "register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{display name for user}}\",\r\n    \"username\":\"{{valid email as username}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"confirmPassword\": \"{{confirm password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get activation link",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{registered username}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/registration/send-link",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"registration",
+								"send-link"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activation by code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{registered username}}\",\r\n    \"otp\": \"{{activation code}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/registration/activate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"registration",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[use browser] activation by link",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/registration/activate?go={{encoded activation code}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"registration",
+								"activate"
+							],
+							"query": [
+								{
+									"key": "go",
+									"value": "{{encoded activation code}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "User Login",
+			"item": [
+				{
+					"name": "login username & password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"{{username}}\",\r\n    \"password\": \"{{password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/user-login/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user-login",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "[use browser] login google oauth",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/user-login/oauth/google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"user-login",
+								"oauth",
+								"google"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Forget Password",
+			"item": [
+				{
+					"name": "get otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{registered username}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/forget-password/send-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"forget-password",
+								"send-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validate otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{registered username}}\",\r\n    \"otp\": \"{{reset password code}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/forget-password/validate-otp",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"forget-password",
+								"validate-otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "change password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"{{registered username}}\",\r\n    \"otp\": \"{{reset password code}}\",\r\n    \"newPassword\": \"{{new password}}\",\r\n    \"confirmPassword\": \"{{confirm new password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/forget-password/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"forget-password",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "noauth"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "IDstar",
+			"item": [
+				{
+					"name": "Karyawan",
+					"item": [
+						{
+							"name": "create",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"dob\": \"{{Tanggal lahir karyawan YYYY-MM-DD}}\",\r\n    \"nama\": \"{{Nama karyawan}}\",\r\n    \"status\": \"{{Status active/inactive}}\",\r\n    \"alamat\": \"{{Alamat karyawan}}\",\r\n    \"detailKaryawan\": {\r\n        \"nik\": \"{{NIK karyawan}}\",\r\n        \"npwp\": \"{{NPWP karyawan}}\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan/save",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID karyawan numerik}},\r\n    \"dob\": \"{{Update tanggal lahir karyawan YYYY-MM-DD}}\",\r\n    \"nama\": \"{{Update nama karyawan}}\",\r\n    \"status\": \"{{Update status active/inactive}}\",\r\n    \"alamat\": \"{{Update alamat karyawan}}\",\r\n    \"detailKaryawan\": {\r\n        \"id\": {{ID karyawan numerik}},\r\n        \"nik\": \"{{Update NIK karyawan}}\",\r\n        \"npwp\": \"{{Update NPWP karyawan}}\"\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in form-data)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}",
+											"type": "default"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}",
+											"type": "default"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}",
+											"type": "default"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in query params)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan/list?page={{Nomor paging}}&size={{Jumlah record di 1 page}}&field={{Field sorting}}&direction={{Arah sorting asc/desc}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by ID",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan/{{ID karyawan numerik}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan",
+										"{{ID karyawan numerik}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID karyawan numerik}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Rekening",
+					"item": [
+						{
+							"name": "create",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"jenis\": \"{{Jenis rekening}}\",\r\n    \"nama\": \"{{Nama pemilik rekening}}\",\r\n    \"rekening\": \"{{Nomor rekening}}\",\r\n    \"karyawan\": {\r\n        \"id\": {{ID karyawan numerik}}\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/rekening/save",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"rekening",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID rekening numerik}},\r\n    \"jenis\": \"{{Update jenis rekening}}\",\r\n    \"nama\": \"{{Update pemilik rekening}}\",\r\n    \"rekening\": \"{{Update nomor rekening}}\",\r\n    \"karyawan\": {\r\n        \"id\": {{ID karyawan numerik}}\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/rekening/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"rekening",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in form-data)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}",
+											"type": "default"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}",
+											"type": "default"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}",
+											"type": "default"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/rekening/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"rekening",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in query params)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/rekening/list?page={{Nomor paging}}&size={{Jumlah record di 1 page}}&field={{Field sorting}}&direction={{Arah sorting asc/desc}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"rekening",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by ID",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/rekening/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"rekening",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID rekening numerik}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/rekening/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"rekening",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Training",
+					"item": [
+						{
+							"name": "create",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"pengajar\": \"{{Pengajar training}}\",\r\n    \"tema\": \"{{Tema training}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/training/save",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"training",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID training numerik}},\r\n    \"pengajar\": \"{{Update pengajar training}}\",\r\n    \"tema\": \"{{Update tema training}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/training/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"training",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in form-data)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}",
+											"type": "default"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}",
+											"type": "default"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}",
+											"type": "default"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/training/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"training",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in query params)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/training/list?page={{Nomor paging}}&size={{Jumlah record di 1 page}}&field={{Field sorting}}&direction={{Arah sorting asc/desc}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"training",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by ID",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/training/{{ID training numerik}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"training",
+										"{{ID training numerik}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID training numerik}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/training/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"training",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Karyawan Training",
+					"item": [
+						{
+							"name": "create",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"karyawan\": {\r\n        \"id\": {{ID karyawan numerik}}\r\n    },\r\n    \"training\": {\r\n        \"id\": {{ID training numerik}}\r\n    },\r\n    \"tanggal\": \"{{Tanggal training YYYY-MM-DD HH24:mm:ss}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan-training/save",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan-training",
+										"save"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID karyawan training numerik}},\r\n    \"karyawan\": {\r\n        \"id\": {{ID karyawan numerik}}\r\n    },\r\n    \"training\": {\r\n        \"id\": {{ID training numerik}}\r\n    },\r\n    \"tanggal\": \"{{Update tanggal training YYYY-MM-DD HH24:mm:ss}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan-training/update",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan-training",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in form-data)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {},
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}",
+											"type": "default"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}",
+											"type": "default"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}",
+											"type": "default"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}",
+											"type": "default"
+										}
+									],
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan-training/list",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan-training",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get list (paging in query params)",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan-training/list?page={{Nomor paging}}&size={{Jumlah record di 1 page}}&field={{Field sorting}}&direction={{Arah sorting asc/desc}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan-training",
+										"list"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "{{Nomor paging}}"
+										},
+										{
+											"key": "size",
+											"value": "{{Jumlah record di 1 page}}"
+										},
+										{
+											"key": "field",
+											"value": "{{Field sorting}}"
+										},
+										{
+											"key": "direction",
+											"value": "{{Arah sorting asc/desc}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by ID",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan-training/{{ID karyawan-training numerik}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan-training",
+										"{{ID karyawan-training numerik}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": {{ID karyawan-training numerik}}\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/v1/idstar/karyawan-training/delete",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"idstar",
+										"karyawan-training",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{authorization token from login}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "File",
+			"item": [
+				{
+					"name": "upload file",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/v1/file/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"file",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "show file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/file/show/{{generated filename}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"file",
+								"show",
+								"{{generated filename}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete file",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/v1/file/delete/{{generated filename}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"v1",
+								"file",
+								"delete",
+								"{{generated filename}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{authorization token from login}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	]
+}
